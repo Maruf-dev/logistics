@@ -29,9 +29,9 @@ export default function Why() {
   return (
     <section className="section why eyebrow-dark">
       <div className="wrap">
-        <div className="section-head reveal" style={{ marginBottom: 0 }}>
+        <div className="section-head reveal">
           <span className="kicker">{t.why.kicker}</span>
-          <h2 style={{ color: "#fff" }}>{t.why.title}</h2>
+          <h2>{t.why.title}</h2>
         </div>
         <div className="why-grid">
           {t.why.items.map((item, i) => (

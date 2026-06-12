@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <SiteHeader />
       <span id="top" />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Hero />
         <Stats />
         <Services />

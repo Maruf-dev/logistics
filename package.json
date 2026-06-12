@@ -1,8 +1,8 @@
 {
-  "name": "arrogate-transportation",
+  "name": "harb-trucking",
   "version": "1.0.0",
   "private": true,
-  "description": "Arrogate Transportation — B2B dry-van freight landing page",
+  "description": "Harb Trucking — B2B dry-van freight landing page",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

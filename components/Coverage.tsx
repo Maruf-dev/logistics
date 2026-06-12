@@ -12,9 +12,9 @@ export default function Coverage() {
         <div className="cov-grid">
           <div className="reveal">
             <span className="kicker">{c.kicker}</span>
-            <h2 style={{ color: "#fff", fontSize: "clamp(30px,4vw,46px)", marginTop: 18 }}>{c.title}</h2>
-            <p style={{ color: "var(--on-ink-mut)", marginTop: 18, fontSize: 17 }}>{c.lead}</p>
-            <div style={{ marginTop: 26 }}>
+            <h2>{c.title}</h2>
+            <p>{c.lead}</p>
+            <div className="cov-lanes">
               {c.lanes.map((lane) => (
                 <div className="lane" key={`${lane.from}-${lane.to}`}>
                   <span className="ln-cities">
@@ -42,19 +42,19 @@ export default function Coverage() {
               <circle className="mp-node" cx="60" cy="150" r="5" />
               <circle className="mp-node" cx="250" cy="250" r="5" />
               {/* labels */}
-              <text className="node-label" x="312" y="86" fill="var(--on-ink-mut)" style={{ fontSize: 11 }}>
+              <text className="node-label" x="312" y="86">
                 {c.map.chicago}
               </text>
-              <text className="node-label" x="78" y="106" fill="var(--on-ink-mut)" style={{ fontSize: 11 }}>
+              <text className="node-label" x="78" y="106">
                 {c.map.denver}
               </text>
-              <text className="node-label" x="352" y="204" fill="var(--on-ink-mut)" style={{ fontSize: 11 }}>
+              <text className="node-label" x="352" y="204">
                 {c.map.atlanta}
               </text>
-              <text className="node-label" x="6" y="146" fill="var(--on-ink-mut)" style={{ fontSize: 11 }}>
+              <text className="node-label" x="6" y="146">
                 {c.map.la}
               </text>
-              <text className="node-label" x="262" y="264" fill="var(--on-ink-mut)" style={{ fontSize: 11 }}>
+              <text className="node-label" x="262" y="264">
                 {c.map.miami}
               </text>
               {/* hub */}

@@ -73,7 +73,6 @@ export default function Equipment() {
               {/* GPS antenna + live ping (on the cab roof) */}
               <line className="td-gps" x1="112" y1="76" x2="112" y2="62" />
               <circle className="gps-dot" cx="112" cy="62" r="2.4" />
-              <circle className="gps-ping" cx="112" cy="62" r="2.4" />
               <text className="gps-label" x="120" y="65">GPS</text>
 
               {/* trailer — cutaway box revealing the loadout */}
@@ -84,10 +83,10 @@ export default function Equipment() {
               <line className="td-detail" x1="499" y1="125" x2="505" y2="125" />
               <line className="td-detail" x1="499" y1="160" x2="505" y2="160" />
 
-              {/* pallet loadout (staggers in on reveal) */}
+              {/* pallet loadout (renders statically) */}
               <g className="loadout">
-                {PALLETS.map((px, i) => (
-                  <g className="pallet" key={px} style={{ animationDelay: `${(0.25 + i * 0.05).toFixed(2)}s` }}>
+                {PALLETS.map((px) => (
+                  <g className="pallet" key={px}>
                     <rect className="pallet-box" x={px} y={120} width={21} height={50} rx={1.5} />
                     <rect className="pallet-deck" x={px} y={170} width={21} height={4} />
                   </g>
@@ -127,8 +126,8 @@ export default function Equipment() {
 
           <div className="reveal eq-info">
             <span className="kicker">{t.equipment.kicker}</span>
-            <h2 style={{ fontSize: "clamp(30px,4vw,46px)", marginTop: 18 }}>{t.equipment.title}</h2>
-            <p style={{ color: "var(--muted)", marginTop: 16, fontSize: 17 }}>{t.equipment.lead}</p>
+            <h2>{t.equipment.title}</h2>
+            <p>{t.equipment.lead}</p>
             <div className="eq-chips">
               <span className="eq-chip"><span className="dot" />53′ Dry Van</span>
               <span className="eq-chip"><span className="dot" />GPS 24/7</span>

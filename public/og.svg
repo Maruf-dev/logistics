@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Harb Trucking — B2B dry-van freight across 48 states. USDOT #3822610.">
+  <rect width="1200" height="630" fill="#10131c"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1">
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="510" x2="1200" y2="510"/>
+  </g>
+  <path d="M96 470 L300 300 L470 388 L640 232 L820 350 L1104 196" fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="96" cy="470" r="9" fill="#ef8a3c"/>
+  <circle cx="1104" cy="196" r="9" fill="#ffffff"/>
+  <text x="96" y="300" fill="#ffffff" font-family="Archivo, 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="78" font-weight="800" letter-spacing="-1.5">Harb Trucking</text>
+  <text x="98" y="362" fill="#ffffff" fill-opacity="0.72" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-size="32" font-weight="500">B2B dry-van freight across 48 states</text>
+  <text x="98" y="560" fill="#ef8a3c" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="24" font-weight="600" letter-spacing="1">USDOT #3822610</text>
+  <text x="372" y="560" fill="#ffffff" fill-opacity="0.55" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="24" font-weight="500" letter-spacing="1">MC #1383751</text>
+</svg>

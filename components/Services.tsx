@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useI18n } from "./LanguageProvider";
 
 /** Icons stay in code (not translatable); zipped with `t.services.items` by index. */
@@ -44,7 +44,7 @@ export default function Services() {
         </div>
         <div className="svc-grid">
           {t.services.items.map((svc, i) => (
-            <article className={`svc reveal${i === 0 ? " feat" : ""}`} key={svc.title}>
+            <article className={`svc reveal${i === 0 ? " feat" : ""}`} key={svc.title} style={{ ["--i"]: i } as CSSProperties}>
               <span className="tag">{svc.tag}</span>
               <div className="ic">{ICONS[i]}</div>
               <h3>{svc.title}</h3>

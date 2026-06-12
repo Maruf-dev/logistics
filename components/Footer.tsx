@@ -35,7 +35,7 @@ export default function Footer() {
           <div className="foot-col">
             <h4>{fo.contactTitle}</h4>
             {fo.contact.map((line) => (
-              <p key={line}>{line}</p>
+              <p key={line}>{line.includes("@") ? <a href={`mailto:${line}`}>{line}</a> : line}</p>
             ))}
           </div>
         </div>

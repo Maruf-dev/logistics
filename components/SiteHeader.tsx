@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Brand from "./Brand";
 import LangToggle from "./LangToggle";
@@ -16,6 +16,8 @@ export default function SiteHeader() {
   const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const menuBtnRef = useRef<HTMLButtonElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   const navLinks = [
     { href: "#services", label: t.nav.services },
@@ -35,7 +37,9 @@ export default function SiteHeader() {
   // Lock body scroll + allow Escape to close while the drawer is open.
   useEffect(() => {
     if (!drawerOpen) return;
+    const menuBtn = menuBtnRef.current; // the trigger to restore focus to on close
     document.body.style.overflow = "hidden";
+    closeBtnRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setDrawerOpen(false);
     };
@@ -43,11 +47,13 @@ export default function SiteHeader() {
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      menuBtn?.focus();
     };
   }, [drawerOpen]);
 
   return (
     <>
+      <a href="#main" className="skip-link">{t.a11y.skip}</a>
       <header className={`site-header${scrolled ? " scrolled" : ""}`} id="header">
         <div className="wrap nav">
           <Brand />
@@ -64,6 +70,7 @@ export default function SiteHeader() {
               {t.nav.quote}
             </Link>
             <button
+              ref={menuBtnRef}
               className="menu-btn"
               type="button"
               aria-label={t.a11y.openMenu}
@@ -90,6 +97,7 @@ export default function SiteHeader() {
         <div className="dr-top">
           <Brand wordmarkOnly />
           <button
+            ref={closeBtnRef}
             className="dr-close"
             type="button"
             aria-label={t.a11y.closeMenu}

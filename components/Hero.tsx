@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "./LanguageProvider";
 
 /* ------------------------------------------------------------------
-   Right-column "live network" map.
+   Right-column network map.
    A US-shaped constellation of nodes (viewBox 1000 x 480). The first
-   HUB_COUNT entries are labelled city hubs; the rest fill the mesh.
+   HUB_COUNT entries are labelled city hubs; the rest fill a faint mesh.
    Edges are derived deterministically (so SSR + client match) by
-   connecting any two nodes closer than EDGE_MAX. A few bright lanes
-   fan out from the Houston dispatch hub, and trucks drive them via rAF.
+   connecting any two nodes closer than EDGE_MAX. A few lanes fan out
+   from the Houston dispatch hub — the single, restrained motif (a slow
+   dashed flow, CSS-only, disabled under prefers-reduced-motion).
 ------------------------------------------------------------------- */
 type MapNode = { x: number; y: number; hub?: string; main?: boolean };
 
@@ -33,15 +33,8 @@ const NODES: MapNode[] = [
 const HUB_COUNT = 7;
 const EDGE_MAX = 156; // nodes closer than this get a faint mesh line
 
-// Bright lanes fanning out from the Houston hub (index pairs into NODES).
+// Lanes fanning out from the Houston hub (index pairs into NODES).
 const ROUTES: [number, number][] = [[2, 3], [2, 4], [2, 1], [2, 5], [2, 0], [2, 6]];
-
-// Trucks travel a → b along a lane; some inbound to the hub, some outbound.
-const TRUCKS = [
-  { a: 2, b: 3, period: 5200, phase: 0 }, // Houston → Chicago (outbound)
-  { a: 4, b: 2, period: 6000, phase: 0.35 }, // Atlanta → Houston (inbound)
-  { a: 1, b: 2, period: 7200, phase: 0.62 }, // Los Angeles → Houston (inbound)
-];
 
 // Deterministic mesh edges, computed once at module load.
 const EDGES: [number, number][] = (() => {
@@ -55,52 +48,9 @@ const EDGES: [number, number][] = (() => {
   return out;
 })();
 
-function transformAt(a: MapNode, b: MapNode, p: number) {
-  const x = a.x + (b.x - a.x) * p;
-  const y = a.y + (b.y - a.y) * p;
-  const ang = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
-  return `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})`;
-}
-
 export default function Hero() {
   const { t, lang } = useI18n();
   const h = t.hero;
-
-  // Honour reduced-motion: when set, trucks stay parked mid-lane.
-  const [animate, setAnimate] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setAnimate(!mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
-  // Drive every truck along its lane from a single rAF loop.
-  const truckRefs = useRef<(SVGGElement | null)[]>([]);
-  useEffect(() => {
-    if (!animate) return;
-    let raf = 0;
-    let start = 0;
-    const frame = (now: number) => {
-      if (!start) start = now;
-      const elapsed = now - start;
-      TRUCKS.forEach((tk, i) => {
-        const el = truckRefs.current[i];
-        if (!el) return;
-        const a = NODES[tk.a];
-        const b = NODES[tk.b];
-        const p = ((elapsed / tk.period + tk.phase) % 1 + 1) % 1;
-        // fade in/out near the wrap so the loop reset isn't a hard jump
-        const op = p < 0.07 ? p / 0.07 : p > 0.93 ? (1 - p) / 0.07 : 1;
-        el.setAttribute("transform", transformAt(a, b, p));
-        el.style.opacity = op.toFixed(3);
-      });
-      raf = requestAnimationFrame(frame);
-    };
-    raf = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(raf);
-  }, [animate]);
 
   const cityName = (node: MapNode) =>
     node.main && lang === "ru" ? "Хьюстон" : node.hub;
@@ -144,14 +94,14 @@ export default function Hero() {
 
           <div className="hero-vis">
             <div className="route">
-              <svg viewBox="0 0 1000 480" aria-label={t.a11y.coverageMap} role="img">
-                <defs>
-                  <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-
+              <div className="route-head">
+                <span className="route-title">{lang === "ru" ? "Сеть маршрутов · США" : "U.S. lane network"}</span>
+                <span className="route-legend" aria-hidden="true">
+                  <span className="rl-item"><i className="rl-hub" />{lang === "ru" ? "Хаб" : "Hub"}</span>
+                  <span className="rl-item"><i className="rl-lane" />{lang === "ru" ? "Рейс" : "Lane"}</span>
+                </span>
+              </div>
+              <svg viewBox="0 0 1000 480" aria-label={t.a11y.heroRoute} role="img">
                 {/* faint triangulated mesh */}
                 <g className="mesh">
                   {EDGES.map(([i, j], k) => (
@@ -159,58 +109,28 @@ export default function Hero() {
                   ))}
                 </g>
 
-                {/* bright lanes from the hub */}
+                {/* lanes from the hub */}
                 <g className="lanes">
                   {ROUTES.map(([i, j], k) => (
                     <line key={k} className="rline" x1={NODES[i].x} y1={NODES[i].y} x2={NODES[j].x} y2={NODES[j].y} />
                   ))}
                 </g>
 
-                {/* mesh dots (twinkle, staggered) */}
+                {/* mesh dots */}
                 <g className="dots">
                   {NODES.slice(HUB_COUNT).map((n, i) => (
-                    <circle
-                      key={i}
-                      className="mnode"
-                      cx={n.x}
-                      cy={n.y}
-                      r={2.6}
-                      style={{ animationDelay: `${((i * 0.41) % 4).toFixed(2)}s` }}
-                    />
+                    <circle key={i} className="mnode" cx={n.x} cy={n.y} r={2.6} />
                   ))}
                 </g>
 
-                {/* trucks rolling along the lanes */}
-                <g className="trucks" aria-hidden="true">
-                  {TRUCKS.map((tk, i) => (
-                    <g
-                      key={i}
-                      className="truck"
-                      ref={(el) => {
-                        truckRefs.current[i] = el;
-                      }}
-                      transform={transformAt(NODES[tk.a], NODES[tk.b], 0.5)}
-                    >
-                      <rect x="-15" y="-7" width="22" height="14" rx="2.5" fill="#fff" />
-                      <rect x="7" y="-4.5" width="9" height="9" rx="1.5" fill="var(--accent)" />
-                      <circle cx="-9" cy="8" r="2.4" fill="var(--ink)" />
-                      <circle cx="11" cy="8" r="2.4" fill="var(--ink)" />
-                    </g>
-                  ))}
-                </g>
-
-                {/* glowing city hubs */}
+                {/* city hubs */}
                 <g className="hubs">
                   {NODES.slice(0, HUB_COUNT).map((n, i) => (
-                    <g key={i}>
-                      <circle cx={n.x} cy={n.y} r={28} fill="url(#hubGlow)" className="hub-glow" />
-                      <circle cx={n.x} cy={n.y} r={9} className="hub-ring" style={{ animationDelay: `${(i * 0.4).toFixed(2)}s` }} />
-                      {n.main ? (
-                        <rect x={n.x - 7} y={n.y - 7} width="14" height="14" rx="3" fill="#fff" className="hub-core" />
-                      ) : (
-                        <circle cx={n.x} cy={n.y} r={4.6} fill="var(--accent)" className="hub-core" />
-                      )}
-                    </g>
+                    n.main ? (
+                      <rect key={i} x={n.x - 7} y={n.y - 7} width="14" height="14" rx="3" className="hub-core" />
+                    ) : (
+                      <circle key={i} cx={n.x} cy={n.y} r={4.6} className="hub-core" />
+                    )
                   ))}
                 </g>
 
@@ -236,35 +156,6 @@ export default function Hero() {
                   })}
                 </g>
               </svg>
-            </div>
-
-            <div className="load-card" aria-hidden="true">
-              <div className="lc-top">
-                <span className="lc-id mono">{h.load.id}</span>
-                <span className="pill">
-                  <span className="dot" />
-                  {h.load.status}
-                </span>
-              </div>
-              <div className="lc-route">
-                <span>{h.load.from}</span>
-                <span className="arr" />
-                <span>{h.load.to}</span>
-              </div>
-              <div className="lc-meta">
-                <div>
-                  <span>{h.load.etaLabel}</span>
-                  <b>{h.load.eta}</b>
-                </div>
-                <div>
-                  <span>{h.load.equipLabel}</span>
-                  <b>{h.load.equip}</b>
-                </div>
-                <div>
-                  <span>{h.load.weightLabel}</span>
-                  <b>{h.load.weight}</b>
-                </div>
-              </div>
             </div>
           </div>
         </div>

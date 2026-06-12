@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useI18n } from "./LanguageProvider";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,7 +15,7 @@ export default function QuoteForm() {
   const [values, setValues] = useState({
     from: "",
     to: "",
-    equip: "dry",
+    equip: "",
     weight: "",
     date: "",
     email: "",
@@ -23,6 +23,13 @@ export default function QuoteForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
   const [successLane, setSuccessLane] = useState("—");
+
+  // Move focus to the confirmation when the form is replaced, so keyboard /
+  // screen-reader users are told the submission worked (role="status" announces it).
+  const successRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (submitted) successRef.current?.focus();
+  }, [submitted]);
 
   const update =
     (field: keyof typeof values) =>
@@ -47,7 +54,7 @@ export default function QuoteForm() {
   };
 
   const reset = () => {
-    setValues({ from: "", to: "", equip: "dry", weight: "", date: "", email: "" });
+    setValues({ from: "", to: "", equip: "", weight: "", date: "", email: "" });
     setErrors({});
     setSubmitted(false);
   };
@@ -58,7 +65,7 @@ export default function QuoteForm() {
         <div className="q-grid">
           <div className="q-info reveal" id="contact">
             <span className="kicker">{q.kicker}</span>
-            <h2 style={{ marginTop: 18 }}>{q.title}</h2>
+            <h2>{q.title}</h2>
             <p>{q.lead}</p>
             <div className="q-contact">
               <div className="row">
@@ -82,7 +89,11 @@ export default function QuoteForm() {
                 </div>
                 <div>
                   <span>{q.contact.emailLabel}</span>
-                  <b>{q.contact.email}</b>
+                  <b>
+                    <a className="contact-link" href={`mailto:${q.contact.email}?subject=Freight%20rate%20request`}>
+                      {q.contact.email}
+                    </a>
+                  </b>
                 </div>
               </div>
               <div className="row">
@@ -114,12 +125,15 @@ export default function QuoteForm() {
                       name="from"
                       type="text"
                       placeholder={f.fromPh}
-                      autoComplete="off"
+                      inputMode="text"
+                      spellCheck={false}
+                      enterKeyHint="next"
                       value={values.from}
                       onChange={update("from")}
                       aria-invalid={errors.from ?? false}
+                      aria-describedby={errors.from ? "from-err" : undefined}
                     />
-                    <span className="msg">{f.fromErr}</span>
+                    <span className="msg" id="from-err" role="alert">{f.fromErr}</span>
                   </div>
                   <div className={`field${errors.to ? " err" : ""}`}>
                     <label htmlFor="to">{f.to}</label>
@@ -128,22 +142,24 @@ export default function QuoteForm() {
                       name="to"
                       type="text"
                       placeholder={f.toPh}
-                      autoComplete="off"
+                      inputMode="text"
+                      spellCheck={false}
+                      enterKeyHint="next"
                       value={values.to}
                       onChange={update("to")}
                       aria-invalid={errors.to ?? false}
+                      aria-describedby={errors.to ? "to-err" : undefined}
                     />
-                    <span className="msg">{f.toErr}</span>
+                    <span className="msg" id="to-err" role="alert">{f.toErr}</span>
                   </div>
                 </div>
 
-                <div className="field two" style={{ marginTop: 16 }}>
+                <div className="field two">
                   <div className="field">
                     <label htmlFor="equip">{f.equip}</label>
                     <select id="equip" name="equip" value={values.equip} onChange={update("equip")}>
+                      <option value="">{f.equipPlaceholder}</option>
                       <option value="dry">{f.equipOptions.dry}</option>
-                      <option value="reefer">{f.equipOptions.reefer}</option>
-                      <option value="flat">{f.equipOptions.flat}</option>
                       <option value="ltl">{f.equipOptions.ltl}</option>
                     </select>
                   </div>
@@ -154,6 +170,7 @@ export default function QuoteForm() {
                       name="weight"
                       type="number"
                       min="0"
+                      inputMode="numeric"
                       placeholder={f.weightPh}
                       value={values.weight}
                       onChange={update("weight")}
@@ -161,7 +178,7 @@ export default function QuoteForm() {
                   </div>
                 </div>
 
-                <div className="field two" style={{ marginTop: 16 }}>
+                <div className="field two">
                   <div className="field">
                     <label htmlFor="date">{f.date}</label>
                     <input id="date" name="date" type="date" value={values.date} onChange={update("date")} />
@@ -173,12 +190,15 @@ export default function QuoteForm() {
                       name="email"
                       type="email"
                       placeholder={f.emailPh}
-                      autoComplete="off"
+                      autoComplete="email"
+                      inputMode="email"
+                      enterKeyHint="send"
                       value={values.email}
                       onChange={update("email")}
                       aria-invalid={errors.email ?? false}
+                      aria-describedby={errors.email ? "email-err" : undefined}
                     />
-                    <span className="msg">{f.emailErr}</span>
+                    <span className="msg" id="email-err" role="alert">{f.emailErr}</span>
                   </div>
                 </div>
 
@@ -191,7 +211,7 @@ export default function QuoteForm() {
                 <p className="q-note">{f.note}</p>
               </form>
             ) : (
-              <div className="q-form q-success show">
+              <div className="q-form q-success show" ref={successRef} tabIndex={-1} role="status" aria-live="polite">
                 <div className="ck">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                     <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />

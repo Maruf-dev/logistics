@@ -6,7 +6,7 @@
 export const LANGS = ["en", "ru"] as const;
 export type Lang = (typeof LANGS)[number];
 export const DEFAULT_LANG: Lang = "en";
-export const STORAGE_KEY = "arrogate-lang";
+export const STORAGE_KEY = "harb-lang";
 
 const en = {
   htmlLang: "en",
@@ -23,33 +23,22 @@ const en = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     drawer: "Navigation menu",
-    heroRoute: "Route from Katy, Texas to destination",
+    heroRoute: "U.S. lane network from the Houston dispatch hub",
     coverageMap: "Map of lanes from the Texas hub",
     trailer: "53-foot dry van diagram",
-    switchLang: "Switch language to Russian",
+    switchLang: "Language",
+    skip: "Skip to content",
   },
   hero: {
     kicker: "B2B Freight · Katy, Texas",
     titleBefore: "Freight that arrives ",
     titleEm: "on time",
     titleAfter: " — load after load.",
-    lead: "Arrogate Transportation is a licensed dry-van carrier for shippers and distributors. Direct rates, live dispatch, and tracking from pickup to delivery across all 48 states.",
+    lead: "Harb Trucking is a licensed dry-van carrier for shippers and distributors. Direct rates, live dispatch, and tracking from pickup to delivery across all 48 states.",
     ctaQuote: "Request a quote",
     ctaServices: "View services",
-    authority: "Authority:",
+    authority: "Interstate authority:",
     active: "Active",
-    load: {
-      id: "LOAD #AR-2026-0418",
-      status: "In transit",
-      from: "Houston",
-      to: "Atlanta",
-      etaLabel: "ETA",
-      eta: "14:20",
-      equipLabel: "Equip.",
-      equip: "Dry Van 53′",
-      weightLabel: "Weight",
-      weight: "38,400 lb",
-    },
   },
   stats: [
     { prefix: "", suffix: "", label: "states in our service area" },
@@ -136,7 +125,7 @@ const en = {
     ],
   },
   why: {
-    kicker: "Why Arrogate",
+    kicker: "Why Harb Trucking",
     title: "A carrier you can rely on",
     items: [
       {
@@ -165,7 +154,7 @@ const en = {
       locationLabel: "Location",
       location: "Katy, Texas, USA",
       emailLabel: "Dispatch e-mail",
-      email: "dispatch@arrogatetransportation.com",
+      email: "dispatch@harbtrucking.com",
       authorityLabel: "Authority",
       authority: "USDOT #3822610 · MC #1383751",
     },
@@ -179,10 +168,9 @@ const en = {
       toPh: "City or ZIP",
       toErr: "Enter a destination",
       equip: "Equipment",
+      equipPlaceholder: "Select equipment",
       equipOptions: {
         dry: "53′ dry van",
-        reefer: "Reefer",
-        flat: "Flatbed",
         ltl: "LTL (partial)",
       },
       weight: "Weight, lb",
@@ -191,7 +179,7 @@ const en = {
       email: "Reply e-mail *",
       emailPh: "you@company.com",
       emailErr: "Enter a valid e-mail",
-      submit: "Get a quote",
+      submit: "Send rate request",
       note: "By submitting, you agree that a dispatcher may contact you using the details provided.",
     },
     success: {
@@ -213,8 +201,8 @@ const en = {
       { href: "#quote", label: "Request a quote" },
     ],
     contactTitle: "Contact",
-    contact: ["Katy, Texas, USA", "dispatch@arrogatetransportation.com", "Dispatch: 24/7", "USDOT #3822610 · MC #1383751"],
-    copyright: "© 2026 Arrogate Transportation INC. All rights reserved.",
+    contact: ["Katy, Texas, USA", "dispatch@harbtrucking.com", "Dispatch: 24/7", "USDOT #3822610 · MC #1383751"],
+    copyright: "© 2026 Harb Trucking. All rights reserved.",
     tagline: "Made for B2B freight · Dry Van · 48 States",
   },
 };
@@ -235,33 +223,22 @@ const ru: typeof en = {
     openMenu: "Открыть меню",
     closeMenu: "Закрыть меню",
     drawer: "Меню навигации",
-    heroRoute: "Маршрут от Кэти, Техас к пункту назначения",
+    heroRoute: "Сеть маршрутов по США из диспетчерского узла в Хьюстоне",
     coverageMap: "Схема маршрутов из узла в Техасе",
     trailer: "Схема сухого фургона 53 фута",
-    switchLang: "Переключить язык на английский",
+    switchLang: "Язык",
+    skip: "Перейти к содержимому",
   },
   hero: {
     kicker: "B2B-грузоперевозки · Кэти, Техас",
     titleBefore: "Фрахт, который приходит ",
     titleEm: "точно в срок",
     titleAfter: " — рейс за рейсом.",
-    lead: "Arrogate Transportation — лицензированный автоперевозчик сухих фургонов для грузоотправителей и дистрибьюторов. Прямые ставки, живая диспетчеризация и отслеживание от загрузки до выгрузки по всем 48 штатам.",
+    lead: "Harb Trucking — лицензированный автоперевозчик сухих фургонов для грузоотправителей и дистрибьюторов. Прямые ставки, живая диспетчеризация и отслеживание от загрузки до выгрузки по всем 48 штатам.",
     ctaQuote: "Запросить ставку",
     ctaServices: "Смотреть услуги",
-    authority: "Authority:",
+    authority: "Междуштатная лицензия:",
     active: "Active",
-    load: {
-      id: "LOAD #AR-2026-0418",
-      status: "В пути",
-      from: "Хьюстон",
-      to: "Атланта",
-      etaLabel: "ETA",
-      eta: "14:20",
-      equipLabel: "Оборуд.",
-      equip: "Dry Van 53′",
-      weightLabel: "Вес",
-      weight: "38 400 lb",
-    },
   },
   stats: [
     { prefix: "", suffix: "", label: "штатов в зоне обслуживания" },
@@ -348,7 +325,7 @@ const ru: typeof en = {
     ],
   },
   why: {
-    kicker: "Почему Arrogate",
+    kicker: "Почему Harb Trucking",
     title: "Перевозчик, на которого можно положиться",
     items: [
       {
@@ -377,12 +354,12 @@ const ru: typeof en = {
       locationLabel: "Локация",
       location: "Кэти, Техас, США",
       emailLabel: "E-mail диспетчера",
-      email: "dispatch@arrogatetransportation.com",
+      email: "dispatch@harbtrucking.com",
       authorityLabel: "Лицензия",
       authority: "USDOT #3822610 · MC #1383751",
     },
     form: {
-      heading: "Калькулятор запроса",
+      heading: "Форма запроса ставки",
       sub: "Это запрос на расчёт, не бронирование. Поля со звёздочкой обязательны.",
       from: "Откуда *",
       fromPh: "Город или ZIP",
@@ -391,10 +368,9 @@ const ru: typeof en = {
       toPh: "Город или ZIP",
       toErr: "Укажите пункт назначения",
       equip: "Оборудование",
+      equipPlaceholder: "Выберите оборудование",
       equipOptions: {
         dry: "Сухой фургон 53′",
-        reefer: "Рефрижератор",
-        flat: "Площадка / Flatbed",
         ltl: "Сборный груз (LTL)",
       },
       weight: "Вес, lb",
@@ -403,7 +379,7 @@ const ru: typeof en = {
       email: "E-mail для ответа *",
       emailPh: "you@company.com",
       emailErr: "Укажите корректный e-mail",
-      submit: "Получить ставку",
+      submit: "Отправить запрос",
       note: "Отправляя запрос, вы соглашаетесь, что диспетчер свяжется с вами по указанным контактам.",
     },
     success: {
@@ -425,8 +401,8 @@ const ru: typeof en = {
       { href: "#quote", label: "Запросить ставку" },
     ],
     contactTitle: "Контакты",
-    contact: ["Кэти, Техас, США", "dispatch@arrogatetransportation.com", "Диспетчер: 24/7", "USDOT #3822610 · MC #1383751"],
-    copyright: "© 2026 Arrogate Transportation INC. Все права защищены.",
+    contact: ["Кэти, Техас, США", "dispatch@harbtrucking.com", "Диспетчер: 24/7", "USDOT #3822610 · MC #1383751"],
+    copyright: "© 2026 Harb Trucking. Все права защищены.",
     tagline: "Made for B2B freight · Dry Van · 48 States",
   },
 };
