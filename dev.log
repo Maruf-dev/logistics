@@ -1,0 +1,232 @@
+   ▲ Next.js 15.3.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.100.33:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.4s
+ ○ Compiling / ...
+ ✓ Compiled / in 5s (795 modules)
+ GET / 200 in 5501ms
+ GET / 200 in 178ms
+ ✓ Compiled in 997ms (763 modules)
+ ✓ Compiled in 498ms (777 modules)
+ GET / 200 in 163ms
+ ✓ Compiled in 502ms (777 modules)
+ GET / 200 in 109ms
+ ✓ Compiled in 381ms (777 modules)
+ GET / 200 in 88ms
+ ✓ Compiled in 367ms (777 modules)
+ GET / 200 in 72ms
+ ✓ Compiled in 484ms (777 modules)
+ GET / 200 in 141ms
+ GET / 200 in 258ms
+ GET / 200 in 93ms
+ GET / 200 in 106ms
+ GET / 200 in 100ms
+ GET / 200 in 134ms
+ GET / 200 in 125ms
+ GET / 200 in 119ms
+ GET / 200 in 250ms
+ GET / 200 in 16ms
+ ✓ Compiled in 396ms (777 modules)
+ GET / 200 in 147ms
+ ✓ Compiled in 194ms (777 modules)
+ GET / 200 in 129ms
+ ✓ Compiled in 215ms (777 modules)
+ GET / 200 in 77ms
+ ✓ Compiled in 218ms (777 modules)
+ GET / 200 in 129ms
+ ✓ Compiled in 198ms (777 modules)
+ GET / 200 in 34ms
+ ✓ Compiled in 693ms (763 modules)
+ GET / 200 in 350ms
+ GET / 200 in 159ms
+ GET / 200 in 100ms
+ GET / 200 in 140ms
+ GET / 200 in 124ms
+ GET / 200 in 220ms
+ GET / 200 in 28ms
+ GET / 200 in 31ms
+ GET / 200 in 65ms
+ GET / 200 in 27ms
+ GET / 200 in 31ms
+ GET / 200 in 31ms
+ GET / 200 in 33ms
+ GET / 200 in 27ms
+ GET / 200 in 54ms
+ ✓ Compiled in 1103ms (763 modules)
+ ✓ Compiled in 225ms (777 modules)
+ GET / 200 in 142ms
+ GET / 200 in 309ms
+ GET / 200 in 300ms
+ GET / 200 in 369ms
+ GET / 200 in 418ms
+ ✓ Compiled in 1504ms (763 modules)
+ ✓ Compiled in 443ms (777 modules)
+ GET / 200 in 233ms
+ ✓ Compiled in 441ms (777 modules)
+ GET / 200 in 155ms
+ ✓ Compiled in 369ms (777 modules)
+ GET / 200 in 129ms
+ GET / 200 in 268ms
+ GET / 200 in 248ms
+ GET / 200 in 295ms
+ ✓ Compiled in 788ms (763 modules)
+ GET / 200 in 220ms
+ GET / 200 in 23ms
+ GET / 200 in 20ms
+ GET / 200 in 21ms
+ GET / 200 in 21ms
+ GET / 200 in 22ms
+ GET / 200 in 261ms
+ GET / 200 in 15ms
+ GET / 200 in 16ms
+ GET / 200 in 37ms
+ GET / 200 in 35ms
+ GET / 200 in 24ms
+ ✓ Compiled in 1470ms (786 modules)
+ GET / 200 in 239ms
+ ✓ Compiled /icon.svg in 330ms (472 modules)
+ GET /icon.svg?585dc00e585ea6f4 200 in 569ms
+ ✓ Compiled in 126ms (473 modules)
+ GET / 200 in 127ms
+ GET / 200 in 82ms
+ ✓ Compiled /apple-icon.png in 333ms (805 modules)
+ GET /apple-icon.png?fb3d3897b82a6d15 200 in 144ms
+ GET / 200 in 90ms
+ GET /apple-icon.png?fb3d3897b82a6d15 200 in 5ms
+ GET / 200 in 233ms
+ GET /icon.svg 200 in 5ms
+ GET /apple-icon.png 200 in 3ms
+ GET / 200 in 2083ms
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+ ⨯ unhandledRejection:  [Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+ ✓ Compiled in 497ms (296 modules)
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+ ⨯ Module not found: Error: Can't resolve 'next-flight-client-entry-loader' in 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\DumpStack.log.tmp'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\swapfile.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+[Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+ ⨯ unhandledRejection:  [Error: ENOENT: no such file or directory, scandir 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\app'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\app'
+}
+Watchpack Error (stats): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+Watchpack Error (stats): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+[Error: ENOENT: no such file or directory, stat 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\.next\cache\webpack\client-development\3.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\.next\\cache\\webpack\\client-development\\3.pack.gz'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, stat 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\.next\cache\webpack\client-development\3.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\.next\\cache\\webpack\\client-development\\3.pack.gz'
+}
+ ⨯ unhandledRejection:  [Error: ENOENT: no such file or directory, stat 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\.next\cache\webpack\client-development\3.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\.next\\cache\\webpack\\client-development\\3.pack.gz'
+}
+[Error: ENOENT: no such file or directory, stat 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\.next\cache\webpack\client-development\5.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\.next\\cache\\webpack\\client-development\\5.pack.gz'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, stat 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\.next\cache\webpack\client-development\5.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\.next\\cache\\webpack\\client-development\\5.pack.gz'
+}
+ ⨯ unhandledRejection:  [Error: ENOENT: no such file or directory, stat 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\.next\cache\webpack\client-development\5.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\user\\Downloads\\make-me-ui-landing-page-design-for-logistics\\.next\\cache\\webpack\\client-development\\5.pack.gz'
+}
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, stat 'C:\Users\user\Downloads\make-me-ui-landing-page-design-for-logistics\.next\cache\webpack\client-development\3.pack.gz'
+Watchpack Error (stats): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+Watchpack Error (stats): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+Watchpack Error (stats): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'

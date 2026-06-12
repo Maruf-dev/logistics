@@ -1,0 +1,864 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arrogate Transportation — B2B-грузоперевозки по 48 штатам</title>
+<meta name="description" content="Arrogate Transportation — лицензированный автоперевозчик сухих фургонов для грузоотправителей и дистрибьюторов. Прямые ставки, живая диспетчеризация, отслеживание от загрузки до выгрузки." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ARROGATE TRANSPORTATION — freight landing
+   Tokens from brand-spec.md (inferred industrial-freight system)
+   ============================================================ */
+:root{
+  --bg:      oklch(98% 0.005 245);
+  --surface: oklch(100% 0 0);
+  --fg:      oklch(22% 0.025 258);
+  --muted:   oklch(50% 0.02 258);
+  --border:  oklch(90% 0.008 258);
+  --accent:  oklch(70% 0.175 55);
+  --accent-d:oklch(62% 0.17 50);
+
+  --ink:     oklch(18% 0.025 260);
+  --ink-2:   oklch(23% 0.03 260);
+  --ink-3:   oklch(28% 0.03 260);
+  --on-ink:  oklch(96% 0.01 258);
+  --on-ink-mut: oklch(72% 0.02 258);
+  --ink-line: color-mix(in oklab, white 9%, transparent);
+
+  --ok: oklch(72% 0.16 150);
+
+  --font-display:'Archivo', system-ui, sans-serif;
+  --font-body:-apple-system, BlinkMacSystemFont,'Segoe UI', system-ui, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --wrap:1200px;
+  --r:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--fg);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:800;line-height:1.04;letter-spacing:-0.02em;color:var(--fg)}
+.mono{font-family:var(--font-mono)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+
+/* ---- shared bits ---- */
+.kicker{
+  font-family:var(--font-mono);font-size:12px;font-weight:600;
+  letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-d);
+  display:inline-flex;align-items:center;gap:9px;
+}
+.kicker::before{content:"";width:22px;height:2px;background:var(--accent);display:inline-block}
+.eyebrow-dark .kicker{color:var(--accent)}
+.section{padding:110px 0}
+.section-head{max-width:680px;margin-bottom:54px}
+.section-head h2{font-size:clamp(32px,4.4vw,52px);margin:18px 0 0}
+.section-head p{color:var(--muted);font-size:18px;margin-top:18px;max-width:60ch}
+
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:0.01em;
+  padding:14px 24px;border-radius:var(--r);border:1.5px solid transparent;
+  cursor:pointer;transition:transform .12s ease, background .18s, color .18s, border-color .18s;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px)}
+.btn-accent{background:var(--accent);color:oklch(22% 0.04 60)}
+.btn-accent:hover{background:var(--accent-d);color:#fff}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--fg)}
+.btn-ink{background:transparent;color:var(--on-ink);border-color:var(--ink-line)}
+.btn-ink:hover{background:var(--ink-line)}
+.btn svg{width:17px;height:17px}
+
+/* ============================================================ HEADER */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  transition:background .25s, box-shadow .25s, border-color .25s;
+  border-bottom:1px solid transparent;
+}
+.site-header.scrolled{
+  background:color-mix(in oklab, var(--ink) 92%, transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom-color:var(--ink-line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--on-ink)}
+.brand .logo{width:34px;height:34px;flex:0 0 auto}
+.brand .wm{display:flex;flex-direction:column;line-height:1}
+.brand .wm b{font-family:var(--font-display);font-weight:900;font-size:19px;letter-spacing:0.04em;color:#fff}
+.brand .wm span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.34em;color:var(--on-ink-mut);margin-top:3px}
+.nav-links{display:flex;align-items:center;gap:34px}
+.nav-links a{
+  font-size:14.5px;font-weight:600;color:var(--on-ink-mut);letter-spacing:0.01em;
+  transition:color .15s;position:relative;
+}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:18px}
+.nav-right .btn-accent{padding:11px 20px;font-size:14px}
+.menu-btn{display:none;background:transparent;border:0;cursor:pointer;width:42px;height:42px;color:#fff}
+.menu-btn svg{width:26px;height:26px}
+
+/* ============================================================ HERO */
+.hero{
+  position:relative;background:var(--ink);color:var(--on-ink);
+  padding:150px 0 90px;overflow:hidden;
+}
+.hero::before{ /* subtle engineering grid */
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--ink-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ink-line) 1px, transparent 1px);
+  background-size:54px 54px;
+  mask-image:radial-gradient(120% 80% at 78% 18%, #000 10%, transparent 72%);
+  opacity:.7;
+}
+.hero::after{ /* warm glow near route */
+  content:"";position:absolute;width:620px;height:620px;right:-120px;top:-140px;
+  background:radial-gradient(circle, color-mix(in oklab,var(--accent) 26%, transparent), transparent 65%);
+  filter:blur(20px);pointer-events:none;
+}
+.hero .wrap{position:relative;z-index:2}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+.hero h1{
+  font-size:clamp(40px,5.8vw,74px);font-weight:900;letter-spacing:-0.03em;
+  color:#fff;margin:22px 0 0;max-width:13ch;
+}
+.hero h1 em{font-style:normal;color:#fff;position:relative;white-space:nowrap}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.09em;background:var(--accent);border-radius:2px}
+.hero .lead{font-size:19px;color:var(--on-ink-mut);max-width:52ch;margin-top:24px}
+.hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.authority{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:38px;
+  padding-top:26px;border-top:1px solid var(--ink-line);
+}
+.auth-chip{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;
+  color:var(--on-ink-mut);display:inline-flex;align-items:center;gap:8px;
+  padding:7px 13px;border:1px solid var(--ink-line);border-radius:99px;
+}
+.auth-chip b{color:#fff;font-weight:600}
+.auth-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in oklab,var(--ok) 25%,transparent)}
+
+/* hero route visual */
+.hero-vis{position:relative}
+.route{
+  position:relative;background:var(--ink-2);border:1px solid var(--ink-line);
+  border-radius:12px;padding:24px;overflow:hidden;
+}
+.route svg{width:100%;height:auto;display:block}
+.route .dash{stroke:var(--accent);stroke-width:2.4;stroke-dasharray:7 9;fill:none;
+  animation:flow 1.4s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-32}}
+.node-label{font-family:var(--font-mono);font-size:11px;fill:var(--on-ink-mut);letter-spacing:0.06em}
+.node-city{font-family:var(--font-display);font-size:15px;font-weight:700;fill:#fff}
+
+/* live load card */
+.load-card{
+  position:absolute;left:-26px;bottom:-26px;width:268px;
+  background:var(--surface);color:var(--fg);border-radius:10px;
+  box-shadow:0 24px 50px -18px rgba(0,0,0,.5);padding:16px 18px;border:1px solid var(--border);
+}
+.load-card .lc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.load-card .lc-id{font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:0.04em}
+.pill{font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:0.06em;
+  text-transform:uppercase;padding:4px 9px;border-radius:99px;
+  background:color-mix(in oklab,var(--ok) 16%,transparent);color:oklch(45% 0.14 150);
+  display:inline-flex;align-items:center;gap:6px}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.35}}
+.lc-route{display:flex;align-items:center;gap:10px;font-weight:700;font-family:var(--font-display);font-size:15px}
+.lc-route .arr{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--border) 0 5px,transparent 5px 10px)}
+.lc-meta{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.lc-meta div span{display:block;font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase}
+.lc-meta div b{font-family:var(--font-mono);font-size:14px;font-weight:600}
+
+/* ============================================================ STATS */
+.stats{background:var(--ink-2);color:var(--on-ink);padding:0}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:40px 26px;border-left:1px solid var(--ink-line);text-align:left}
+.stat:first-child{border-left:0}
+.stat .num{font-family:var(--font-mono);font-weight:600;font-size:clamp(34px,4vw,46px);color:#fff;letter-spacing:-0.01em}
+.stat .num small{color:var(--accent);font-size:.6em;margin-left:2px}
+.stat .lbl{font-size:13.5px;color:var(--on-ink-mut);margin-top:8px;line-height:1.4}
+
+/* ============================================================ SERVICES */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.svc{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:30px 28px 32px;transition:border-color .18s, transform .18s, box-shadow .18s;
+}
+.svc:hover{border-color:color-mix(in oklab,var(--fg) 30%,var(--border));transform:translateY(-3px);
+  box-shadow:0 18px 40px -26px rgba(20,30,50,.4)}
+.svc .ic{width:46px;height:46px;border-radius:8px;display:grid;place-items:center;
+  background:var(--ink);color:#fff;margin-bottom:20px}
+.svc.feat .ic{background:var(--accent);color:oklch(22% 0.04 60)}
+.svc .ic svg{width:24px;height:24px}
+.svc h3{font-size:20px;font-weight:700;letter-spacing:-0.01em}
+.svc p{color:var(--muted);font-size:15px;margin-top:9px}
+.svc .tag{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--accent-d);margin-bottom:14px;display:block}
+
+/* ============================================================ COVERAGE */
+.coverage{background:var(--ink);color:var(--on-ink)}
+.cov-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center}
+.lane{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;
+  padding:16px 0;border-bottom:1px solid var(--ink-line);
+}
+.lane:first-of-type{border-top:1px solid var(--ink-line)}
+.lane .ln-cities{display:flex;align-items:center;gap:11px;font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff}
+.lane .ln-cities .arr{width:30px;height:1px;background:var(--ink-line);position:relative}
+.lane .ln-cities .arr::after{content:"";position:absolute;right:0;top:-2px;width:5px;height:5px;border-top:1px solid var(--on-ink-mut);border-right:1px solid var(--on-ink-mut);transform:rotate(45deg)}
+.lane .ln-time{font-family:var(--font-mono);font-size:13px;color:var(--on-ink-mut)}
+.map-wrap{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:12px;padding:30px}
+.map-wrap svg{width:100%;height:auto}
+.map-wrap .mp-line{stroke:var(--accent);stroke-width:1.6;fill:none;stroke-dasharray:4 6;opacity:.85}
+.map-wrap .mp-node{fill:var(--on-ink-mut)}
+.map-wrap .mp-hub{fill:var(--accent)}
+.map-wrap .mp-hub-ring{fill:none;stroke:var(--accent);stroke-width:1.4;opacity:.5;animation:ring 2.6s ease-out infinite}
+@keyframes ring{0%{r:6;opacity:.6}100%{r:22;opacity:0}}
+
+/* ============================================================ PROCESS */
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s}
+.step{padding:34px 28px 34px 0;border-top:2px solid var(--fg);position:relative}
+.step .n{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--accent-d)}
+.step h3{font-size:20px;margin:16px 0 8px}
+.step p{color:var(--muted);font-size:14.5px;max-width:24ch}
+.step::after{content:"";position:absolute;top:-2px;left:0;width:34px;height:2px;background:var(--accent)}
+
+/* ============================================================ EQUIPMENT */
+.equip{background:var(--surface)}
+.eq-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:60px;align-items:center}
+.trailer-diagram{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:36px 32px}
+.trailer-diagram svg{width:100%;height:auto}
+.td-out{fill:none;stroke:var(--fg);stroke-width:2;stroke-linejoin:round}
+.td-fill{fill:color-mix(in oklab,var(--ink) 6%, white)}
+.td-dim{stroke:var(--accent);stroke-width:1.2}
+.td-dimtxt{font-family:var(--font-mono);font-size:11px;fill:var(--accent-d);letter-spacing:0.04em}
+.eq-specs{list-style:none;margin-top:14px}
+.eq-specs li{display:flex;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid var(--border)}
+.eq-specs li span{color:var(--muted);font-size:15px}
+.eq-specs li b{font-family:var(--font-mono);font-weight:600;font-size:15px;color:var(--fg)}
+
+/* ============================================================ WHY (dark) */
+.why{background:var(--ink-2);color:var(--on-ink)}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:46px}
+.why-item{display:flex;gap:18px;padding:26px;background:var(--ink);border:1px solid var(--ink-line);border-radius:var(--r)}
+.why-item .ic{flex:0 0 auto;width:44px;height:44px;border-radius:8px;display:grid;place-items:center;border:1px solid var(--ink-line);color:var(--accent)}
+.why-item .ic svg{width:22px;height:22px}
+.why-item h3{font-size:18px;color:#fff}
+.why-item p{color:var(--on-ink-mut);font-size:14.5px;margin-top:6px}
+
+/* ============================================================ QUOTE */
+.quote{background:var(--ink);color:var(--on-ink);position:relative;overflow:hidden}
+.quote::before{content:"";position:absolute;width:520px;height:520px;left:-160px;bottom:-200px;
+  background:radial-gradient(circle,color-mix(in oklab,var(--accent) 20%,transparent),transparent 65%);filter:blur(10px)}
+.q-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;position:relative;z-index:2}
+.q-info h2{font-size:clamp(30px,4vw,46px);color:#fff}
+.q-info p{color:var(--on-ink-mut);font-size:17px;margin-top:18px;max-width:42ch}
+.q-contact{margin-top:34px;display:grid;gap:16px}
+.q-contact .row{display:flex;gap:14px;align-items:flex-start}
+.q-contact .ic{width:38px;height:38px;border-radius:8px;border:1px solid var(--ink-line);display:grid;place-items:center;color:var(--accent);flex:0 0 auto}
+.q-contact .ic svg{width:19px;height:19px}
+.q-contact .row span{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-ink-mut)}
+.q-contact .row b{font-weight:600;color:#fff;font-size:15px}
+
+.q-form{background:var(--surface);color:var(--fg);border-radius:14px;padding:34px;box-shadow:0 40px 90px -40px rgba(0,0,0,.6)}
+.q-form h3{font-size:21px}
+.q-form .sub{color:var(--muted);font-size:14px;margin-top:6px;margin-bottom:22px}
+.field{margin-bottom:16px}
+.field.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0}
+.field label{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.field input,.field select{
+  width:100%;padding:12px 13px;border:1.5px solid var(--border);border-radius:var(--r);
+  font-family:var(--font-body);font-size:15px;color:var(--fg);background:var(--surface);transition:border-color .15s;
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--accent)}
+.field.err input,.field.err select{border-color:oklch(60% 0.2 25)}
+.field .msg{font-size:12px;color:oklch(55% 0.2 25);margin-top:5px;display:none}
+.field.err .msg{display:block}
+.q-form .btn-accent{width:100%;justify-content:center;margin-top:20px;padding:15px}
+.q-note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
+.q-success{display:none;text-align:center;padding:18px 0}
+.q-success.show{display:block}
+.q-success .ck{width:60px;height:60px;border-radius:50%;background:color-mix(in oklab,var(--ok) 18%,transparent);
+  display:grid;place-items:center;margin:0 auto 18px;color:oklch(45% 0.14 150)}
+.q-success .ck svg{width:30px;height:30px}
+.q-success h3{font-size:22px}
+.q-success p{color:var(--muted);margin-top:10px;font-size:15px}
+.q-success .lane-tag{font-family:var(--font-mono);color:var(--fg);font-weight:600}
+
+/* ============================================================ FOOTER */
+.footer{background:var(--ink);color:var(--on-ink-mut);padding:72px 0 34px;border-top:1px solid var(--ink-line)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+.foot-brand .brand{margin-bottom:18px}
+.foot-brand p{font-size:14px;max-width:34ch;line-height:1.6}
+.foot-col h4{font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#fff;margin-bottom:16px;font-weight:600}
+.foot-col a,.foot-col p{display:block;font-size:14px;color:var(--on-ink-mut);padding:5px 0;transition:color .15s}
+.foot-col a:hover{color:var(--accent)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+  margin-top:48px;padding-top:24px;border-top:1px solid var(--ink-line);font-family:var(--font-mono);font-size:12px;letter-spacing:0.03em}
+
+/* ============================================================ REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ============================================================ RESPONSIVE */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-vis{max-width:520px}
+  .cov-grid,.eq-grid,.q-grid{grid-template-columns:1fr;gap:40px}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .proc-grid{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:1fr}
+}
+@media(max-width:820px){
+  .nav-links,.nav-right .btn{display:none}
+  .menu-btn{display:grid;place-items:center}
+  .stats .wrap{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--ink-line)}
+  .stat:nth-child(odd){border-left:0}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .foot-brand{grid-column:1/-1}
+}
+@media(max-width:560px){
+  .wrap{padding:0 20px}
+  .section{padding:74px 0}
+  .hero{padding:124px 0 70px}
+  .svc-grid,.proc-grid{grid-template-columns:1fr}
+  .field.two{grid-template-columns:1fr;gap:0}
+  .load-card{position:relative;left:0;bottom:0;width:100%;margin-top:18px}
+  .hero-cta .btn{flex:1;justify-content:center}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-bottom{justify-content:flex-start}
+  .q-form{padding:24px}
+}
+
+/* mobile drawer */
+.drawer{position:fixed;inset:0;z-index:200;background:var(--ink);
+  display:flex;flex-direction:column;padding:26px;transform:translateX(100%);
+  transition:transform .3s ease;visibility:hidden}
+.drawer.open{transform:none;visibility:visible}
+.drawer .dr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
+.drawer .dr-close{background:transparent;border:0;color:#fff;cursor:pointer;width:42px;height:42px}
+.drawer .dr-close svg{width:26px;height:26px}
+.drawer a{color:#fff;font-family:var(--font-display);font-weight:700;font-size:26px;padding:16px 0;border-bottom:1px solid var(--ink-line)}
+.drawer .btn-accent{margin-top:auto}
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header" id="header">
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="Arrogate Transportation">
+      <svg class="logo" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="37" height="37" rx="7" fill="#fff"/>
+        <path d="M8 26 L18 12 L24 21 L28 16 L33 26" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="18" cy="12" r="2.6" fill="var(--accent)"/>
+      </svg>
+      <span class="wm"><b>ARROGATE</b><span>TRANSPORTATION</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Основная навигация">
+      <a href="#services">Услуги</a>
+      <a href="#coverage">Покрытие</a>
+      <a href="#process">Как работаем</a>
+      <a href="#equipment">Парк</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#quote" class="btn btn-accent">Запросить ставку</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Открыть меню">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer">
+  <div class="dr-top">
+    <span class="brand"><span class="wm"><b>ARROGATE</b><span>TRANSPORTATION</span></span></span>
+    <button class="dr-close" id="drClose" aria-label="Закрыть меню">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <a href="#services">Услуги</a>
+  <a href="#coverage">Покрытие</a>
+  <a href="#process">Как работаем</a>
+  <a href="#equipment">Парк</a>
+  <a href="#contact">Контакты</a>
+  <a href="#quote" class="btn btn-accent" style="font-size:16px;justify-content:center">Запросить ставку</a>
+</div>
+
+<span id="top"></span>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero eyebrow-dark" data-od-id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="kicker">B2B-грузоперевозки · Кэти, Техас</span>
+        <h1>Фрахт, который приходит <em>точно в срок</em> — рейс за рейсом.</h1>
+        <p class="lead">Arrogate Transportation — лицензированный автоперевозчик сухих фургонов для грузоотправителей и дистрибьюторов. Прямые ставки, живая диспетчеризация и отслеживание от загрузки до выгрузки по всем 48 штатам.</p>
+        <div class="hero-cta">
+          <a href="#quote" class="btn btn-accent">Запросить ставку
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#services" class="btn btn-ink">Смотреть услуги</a>
+        </div>
+        <div class="authority">
+          <span class="auth-chip"><span class="dot"></span>Authority: <b>Active</b></span>
+          <span class="auth-chip">USDOT <b>#3822610</b></span>
+          <span class="auth-chip">MC <b>#1383751</b></span>
+        </div>
+      </div>
+
+      <div class="hero-vis">
+        <div class="route">
+          <svg viewBox="0 0 420 230" aria-label="Маршрут от Кэти, Техас к пункту назначения">
+            <line class="dash" x1="58" y1="150" x2="360" y2="70"/>
+            <!-- origin -->
+            <circle cx="58" cy="150" r="9" fill="var(--accent)"/>
+            <circle cx="58" cy="150" r="9" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity=".5"/>
+            <text class="node-label" x="40" y="182">ОТКУДА</text>
+            <text class="node-city" x="40" y="200">Кэти, TX</text>
+            <!-- dest -->
+            <rect x="352" y="62" width="16" height="16" rx="3" fill="#fff"/>
+            <text class="node-label" x="300" y="40">КУДА</text>
+            <text class="node-city" x="300" y="58">48 штатов</text>
+            <!-- truck glyph mid-route -->
+            <g transform="translate(196,103)">
+              <rect x="-16" y="-9" width="22" height="14" rx="2" fill="#fff"/>
+              <rect x="6" y="-5" width="11" height="10" rx="1.5" fill="var(--accent)"/>
+              <circle cx="-9" cy="7" r="2.6" fill="var(--ink)"/>
+              <circle cx="11" cy="7" r="2.6" fill="var(--ink)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="load-card" aria-hidden="true">
+          <div class="lc-top">
+            <span class="lc-id mono">LOAD #AR-2026-0418</span>
+            <span class="pill"><span class="dot"></span>В пути</span>
+          </div>
+          <div class="lc-route">
+            <span>Хьюстон</span><span class="arr"></span><span>Атланта</span>
+          </div>
+          <div class="lc-meta">
+            <div><span>ETA</span><b>14:20</b></div>
+            <div><span>Оборуд.</span><b>Dry Van 53′</b></div>
+            <div><span>Вес</span><b>38 400 lb</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS ===================== -->
+<section class="stats" data-od-id="stats">
+  <div class="wrap" id="statsRow">
+    <div class="stat"><div class="num"><span class="count" data-to="48">0</span></div><div class="lbl">штатов в зоне обслуживания</div></div>
+    <div class="stat"><div class="num"><span class="count" data-to="53">0</span><small>ft</small></div><div class="lbl">сухой фургон в стандарте парка</div></div>
+    <div class="stat"><div class="num"><span class="count" data-to="24">0</span><small>/7</small></div><div class="lbl">диспетчеризация и поддержка</div></div>
+    <div class="stat"><div class="num">≤<span class="count" data-to="2">0</span><small> ч</small></div><div class="lbl">ответ на запрос ставки</div></div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="section" id="services" data-od-id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Услуги</span>
+      <h2>Грузоперевозки полного цикла</h2>
+      <p>От полной загрузки сухим фургоном до срочной экспедиции — мы закрываем перевозку, видимость и документы в одном договоре.</p>
+    </div>
+    <div class="svc-grid">
+      <article class="svc feat reveal">
+        <span class="tag">Основное направление</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M1 5h13v10H1zM14 8h4l3 3v4h-7" stroke-linejoin="round"/><circle cx="6" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg></div>
+        <h3>FTL — полная загрузка</h3>
+        <p>Сухой фургон 53′ под ваш груз целиком. Один отправитель, прямой рейс, без перегрузов и консолидации.</p>
+      </article>
+      <article class="svc reveal">
+        <span class="tag">Сборные грузы</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8l9-5 9 5v8l-9 5-9-5z" stroke-linejoin="round"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></div>
+        <h3>LTL — частичная загрузка</h3>
+        <p>Платите только за занятое место. Консолидация партий для дистрибьюторов с гибким графиком.</p>
+      </article>
+      <article class="svc reveal">
+        <span class="tag">Срочно</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M13 2L4 14h7l-1 8 9-12h-7z" stroke-linejoin="round"/></svg></div>
+        <h3>Экспедированные рейсы</h3>
+        <p>Hot-shot и срочная доставка по жёстким окнам. Выделенная машина, приоритетная подача.</p>
+      </article>
+      <article class="svc reveal">
+        <span class="tag">Хранение</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V9l9-6 9 6v12" stroke-linejoin="round"/><path d="M7 21v-7h10v7M7 14h10"/></svg></div>
+        <h3>Кросс-докинг и склад</h3>
+        <p>Перевалка и краткосрочное хранение на узле в Техасе для быстрой переотправки партий.</p>
+      </article>
+      <article class="svc reveal">
+        <span class="tag">Видимость</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-5.2-7-11a7 7 0 0114 0c0 5.8-7 11-7 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+        <h3>Отслеживание 24/7</h3>
+        <p>GPS-позиция и статусы по каждому рейсу. Уведомления о подаче, погрузке и доставке.</p>
+      </article>
+      <article class="svc reveal">
+        <span class="tag">Документы</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2h9l5 5v15H6z" stroke-linejoin="round"/><path d="M15 2v5h5M9 13h7M9 17h7"/></svg></div>
+        <h3>Электронные накладные и POD</h3>
+        <p>BOL, POD и закрывающие документы в цифре — сразу после выгрузки, без ожидания почты.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COVERAGE ===================== -->
+<section class="section coverage eyebrow-dark" id="coverage" data-od-id="coverage">
+  <div class="wrap">
+    <div class="cov-grid">
+      <div class="reveal">
+        <span class="kicker">Покрытие</span>
+        <h2 style="color:#fff;font-size:clamp(30px,4vw,46px);margin-top:18px">База в Техасе. Маршруты по всей стране.</h2>
+        <p style="color:var(--on-ink-mut);margin-top:18px;font-size:17px">Хаб в Кэти (Хьюстон) и активная междуштатная лицензия позволяют брать грузы по основным коридорам Юга, Юго-Востока и Среднего Запада. Ориентировочное транзитное время по ключевым направлениям:</p>
+        <div style="margin-top:26px">
+          <div class="lane"><span class="ln-cities">Хьюстон<span class="arr"></span>Даллас</span><span class="ln-time mono">~4–5 ч · 385 км</span></div>
+          <div class="lane"><span class="ln-cities">Хьюстон<span class="arr"></span>Атланта</span><span class="ln-time mono">~12–14 ч · 1 290 км</span></div>
+          <div class="lane"><span class="ln-cities">Хьюстон<span class="arr"></span>Чикаго</span><span class="ln-time mono">~17–19 ч · 1 745 км</span></div>
+          <div class="lane"><span class="ln-cities">Хьюстон<span class="arr"></span>Лос-Анджелес</span><span class="ln-time mono">~23–26 ч · 2 490 км</span></div>
+        </div>
+      </div>
+      <div class="map-wrap reveal">
+        <svg viewBox="0 0 460 300" aria-label="Схема маршрутов из узла в Техасе">
+          <!-- abstract route lines from hub -->
+          <path class="mp-line" d="M150 210 L300 90"/>
+          <path class="mp-line" d="M150 210 L120 110"/>
+          <path class="mp-line" d="M150 210 L340 200"/>
+          <path class="mp-line" d="M150 210 L60 150"/>
+          <path class="mp-line" d="M150 210 L250 250"/>
+          <!-- dest nodes -->
+          <circle class="mp-node" cx="300" cy="90" r="5"/>
+          <circle class="mp-node" cx="120" cy="110" r="5"/>
+          <circle class="mp-node" cx="340" cy="200" r="5"/>
+          <circle class="mp-node" cx="60" cy="150" r="5"/>
+          <circle class="mp-node" cx="250" cy="250" r="5"/>
+          <!-- labels -->
+          <text class="node-label" x="312" y="86" fill="var(--on-ink-mut)" style="font-size:11px">Чикаго</text>
+          <text class="node-label" x="78" y="106" fill="var(--on-ink-mut)" style="font-size:11px">Денвер</text>
+          <text class="node-label" x="352" y="204" fill="var(--on-ink-mut)" style="font-size:11px">Атланта</text>
+          <text class="node-label" x="6" y="146" fill="var(--on-ink-mut)" style="font-size:11px">Л.-А.</text>
+          <text class="node-label" x="262" y="264" fill="var(--on-ink-mut)" style="font-size:11px">Майами</text>
+          <!-- hub -->
+          <circle class="mp-hub-ring" cx="150" cy="210" r="6"/>
+          <circle class="mp-hub" cx="150" cy="210" r="6.5"/>
+          <text x="92" y="232" fill="#fff" style="font-family:var(--font-display);font-weight:800;font-size:14px">Кэти, TX</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROCESS ===================== -->
+<section class="section" id="process" data-od-id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Как мы работаем</span>
+      <h2>Четыре шага от запроса до выгрузки</h2>
+    </div>
+    <div class="proc-grid">
+      <div class="step reveal"><div class="n">01</div><h3>Запрос</h3><p>Пришлите маршрут, тип груза и вес — формой на сайте или диспетчеру.</p></div>
+      <div class="step reveal"><div class="n">02</div><h3>Ставка за ≤2 ч</h3><p>Возвращаем прозрачную цену и доступное окно подачи в рабочее время.</p></div>
+      <div class="step reveal"><div class="n">03</div><h3>Подача и загрузка</h3><p>Машина на адресе вовремя. Контроль погрузки и крепления груза.</p></div>
+      <div class="step reveal"><div class="n">04</div><h3>Доставка и POD</h3><p>Отслеживание в пути, выгрузка по окну и электронные закрывающие.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EQUIPMENT ===================== -->
+<section class="section equip" id="equipment" data-od-id="equipment">
+  <div class="wrap">
+    <div class="eq-grid">
+      <div class="trailer-diagram reveal">
+        <svg viewBox="0 0 460 200" aria-label="Схема сухого фургона 53 фута">
+          <!-- dimension top -->
+          <line class="td-dim" x1="70" y1="34" x2="430" y2="34"/>
+          <line class="td-dim" x1="70" y1="29" x2="70" y2="39"/>
+          <line class="td-dim" x1="430" y1="29" x2="430" y2="39"/>
+          <text class="td-dimtxt" x="218" y="28">53 ft · 16.1 m</text>
+          <!-- tractor -->
+          <path class="td-fill" d="M18 150 V96 q0-8 8-8 h22 l14 20 v42 z"/>
+          <path class="td-out" d="M18 150 V96 q0-8 8-8 h22 l14 20 v42"/>
+          <!-- trailer box -->
+          <rect class="td-fill" x="70" y="60" width="360" height="90"/>
+          <rect class="td-out" x="70" y="60" width="360" height="90"/>
+          <line class="td-out" x1="70" y1="150" x2="430" y2="150" stroke-width="2"/>
+          <!-- door seams -->
+          <line x1="250" y1="60" x2="250" y2="150" stroke="var(--border)" stroke-width="1.4"/>
+          <line x1="350" y1="60" x2="350" y2="150" stroke="var(--border)" stroke-width="1.4"/>
+          <!-- wheels -->
+          <circle cx="44" cy="162" r="13" class="td-out"/><circle cx="44" cy="162" r="4" fill="var(--fg)"/>
+          <circle cx="318" cy="162" r="13" class="td-out"/><circle cx="318" cy="162" r="4" fill="var(--fg)"/>
+          <circle cx="352" cy="162" r="13" class="td-out"/><circle cx="352" cy="162" r="4" fill="var(--fg)"/>
+          <!-- height dim -->
+          <text class="td-dimtxt" x="436" y="108" transform="rotate(90,436,108)">9 ft</text>
+        </svg>
+      </div>
+      <div class="reveal">
+        <span class="kicker">Парк</span>
+        <h2 style="font-size:clamp(30px,4vw,46px);margin-top:18px">Современный сухой фургон 53 фута</h2>
+        <p style="color:var(--muted);margin-top:16px;font-size:17px">Стандартизированный парк под палетный груз дистрибьюторов: предсказуемый объём, ELD-учёт и GPS на каждой машине.</p>
+        <ul class="eq-specs">
+          <li><span>Длина прицепа</span><b>53 ft (16.1 m)</b></li>
+          <li><span>Полезная нагрузка</span><b>≈ 20 000 kg / 45 000 lb</b></li>
+          <li><span>Вместимость</span><b>26 EUR-палет</b></li>
+          <li><span>Учёт рейса</span><b>ELD · GPS 24/7</b></li>
+          <li><span>Тип</span><b>Dry Van · сухой груз</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY ===================== -->
+<section class="section why eyebrow-dark" data-od-id="why">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:0">
+      <span class="kicker">Почему Arrogate</span>
+      <h2 style="color:#fff">Перевозчик, на которого можно положиться</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4"/></svg></div><div><h3>Прямой перевозчик</h3><p>Вы работаете с владельцем authority, а не с цепочкой посредников. Ответственность и ставка — из первых рук.</p></div></div>
+      <div class="why-item reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2h9l5 5v15H6z" stroke-linejoin="round"/><path d="M15 2v5h5M9 14l2 2 4-4"/></svg></div><div><h3>Активная лицензия и страховка</h3><p>USDOT #3822610, MC #1383751 — действующая междуштатная лицензия и страховое покрытие груза.</p></div></div>
+      <div class="why-item reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v12H7l-3 3z" stroke-linejoin="round"/><path d="M8 10h8M8 13h5"/></svg></div><div><h3>Живая связь с диспетчером</h3><p>Реальный человек на линии, а не тикеты. Статусы по рейсу и быстрые решения по подаче.</p></div></div>
+      <div class="why-item reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/><circle cx="12" cy="12" r="3.4"/></svg></div><div><h3>Прозрачные ставки</h3><p>Цена «всё включено» без скрытых надбавок. Что согласовали в запросе — то и в счёте.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== QUOTE ===================== -->
+<section class="section quote eyebrow-dark" id="quote" data-od-id="quote">
+  <div class="wrap">
+    <div class="q-grid">
+      <div class="q-info reveal" id="contact">
+        <span class="kicker">Запрос ставки</span>
+        <h2 style="margin-top:18px">Получите ставку на ваш груз</h2>
+        <p>Заполните маршрут и параметры груза — диспетчер вернётся с ценой и окном подачи в течение 2 часов в рабочее время.</p>
+        <div class="q-contact">
+          <div class="row"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-5.2-7-11a7 7 0 0114 0c0 5.8-7 11-7 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg></div><div><span>Локация</span><b>Кэти, Техас, США</b></div></div>
+          <div class="row"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6h18v12H3z" stroke-linejoin="round"/><path d="M3 7l9 6 9-6"/></svg></div><div><span>E-mail диспетчера</span><b>dispatch@arrogatetransportation.com</b></div></div>
+          <div class="row"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg></div><div><span>Лицензия</span><b>USDOT #3822610 · MC #1383751</b></div></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form class="q-form" id="quoteForm" novalidate>
+          <h3>Калькулятор запроса</h3>
+          <p class="sub">Это запрос на расчёт, не бронирование. Поля со звёздочкой обязательны.</p>
+
+          <div class="field two">
+            <div class="field" data-field>
+              <label for="from">Откуда *</label>
+              <input id="from" name="from" type="text" placeholder="Город или ZIP" autocomplete="off">
+              <span class="msg">Укажите пункт отправления</span>
+            </div>
+            <div class="field" data-field>
+              <label for="to">Куда *</label>
+              <input id="to" name="to" type="text" placeholder="Город или ZIP" autocomplete="off">
+              <span class="msg">Укажите пункт назначения</span>
+            </div>
+          </div>
+
+          <div class="field two" style="margin-top:16px">
+            <div class="field" data-field>
+              <label for="equip">Оборудование</label>
+              <select id="equip" name="equip">
+                <option value="dry">Сухой фургон 53′</option>
+                <option value="reefer">Рефрижератор</option>
+                <option value="flat">Площадка / Flatbed</option>
+                <option value="ltl">Сборный груз (LTL)</option>
+              </select>
+            </div>
+            <div class="field" data-field>
+              <label for="weight">Вес, lb</label>
+              <input id="weight" name="weight" type="number" min="0" placeholder="напр. 38000">
+            </div>
+          </div>
+
+          <div class="field two" style="margin-top:16px">
+            <div class="field" data-field>
+              <label for="date">Дата загрузки</label>
+              <input id="date" name="date" type="date">
+            </div>
+            <div class="field" data-field>
+              <label for="email">E-mail для ответа *</label>
+              <input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="off">
+              <span class="msg">Укажите корректный e-mail</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-accent">Получить ставку
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="q-note">Отправляя запрос, вы соглашаетесь, что диспетчер свяжется с вами по указанным контактам.</p>
+        </form>
+
+        <div class="q-form q-success" id="quoteSuccess" style="margin-top:0">
+          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Запрос принят</h3>
+          <p>Маршрут <span class="lane-tag" id="successLane">—</span> в работе. Диспетчер вернётся со ставкой в течение 2 часов в рабочее время.</p>
+          <button type="button" class="btn btn-ghost" id="resetQuote" style="margin-top:22px">Отправить ещё один запрос</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer" data-od-id="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand">
+          <svg class="logo" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="1.5" y="1.5" width="37" height="37" rx="7" fill="#fff"/>
+            <path d="M8 26 L18 12 L24 21 L28 16 L33 26" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="18" cy="12" r="2.6" fill="var(--accent)"/>
+          </svg>
+          <span class="wm"><b>ARROGATE</b><span>TRANSPORTATION</span></span>
+        </a>
+        <p>Лицензированный автоперевозчик сухих фургонов для B2B-грузоотправителей и дистрибьюторов. Кэти, Техас.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Услуги</h4>
+        <a href="#services">FTL — полная загрузка</a>
+        <a href="#services">LTL — сборные грузы</a>
+        <a href="#services">Экспедированные рейсы</a>
+        <a href="#services">Кросс-докинг</a>
+      </div>
+      <div class="foot-col">
+        <h4>Компания</h4>
+        <a href="#coverage">Покрытие</a>
+        <a href="#process">Как мы работаем</a>
+        <a href="#equipment">Парк</a>
+        <a href="#quote">Запросить ставку</a>
+      </div>
+      <div class="foot-col">
+        <h4>Контакты</h4>
+        <p>Кэти, Техас, США</p>
+        <p>dispatch@arrogatetransportation.com</p>
+        <p>Диспетчер: 24/7</p>
+        <p>USDOT #3822610 · MC #1383751</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Arrogate Transportation INC. Все права защищены.</span>
+      <span>Made for B2B freight · Dry Van · 48 States</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- header scroll state ---------- */
+const header = document.getElementById('header');
+const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+/* ---------- mobile drawer ---------- */
+const drawer = document.getElementById('drawer');
+const openDrawer = () => drawer.classList.add('open');
+const closeDrawer = () => drawer.classList.remove('open');
+document.getElementById('menuBtn').addEventListener('click', openDrawer);
+document.getElementById('drClose').addEventListener('click', closeDrawer);
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+/* ---------- smooth anchor scroll (no scrollIntoView) ---------- */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id.length > 1) {
+      const el = document.querySelector(id);
+      if (el) {
+        e.preventDefault();
+        const y = el.getBoundingClientRect().top + window.scrollY - 66;
+        window.scrollTo({top:y, behavior:'smooth'});
+      }
+    }
+  });
+});
+
+/* ---------- reveal on view ---------- */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+}, {threshold:0.14});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- animated counters ---------- */
+let counted = false;
+const statsRow = document.getElementById('statsRow');
+const countUp = () => {
+  document.querySelectorAll('.count').forEach(el => {
+    const to = +el.dataset.to; const dur = 1100; const t0 = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0)/dur);
+      const eased = 1 - Math.pow(1-p, 3);
+      el.textContent = Math.round(to * eased);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+};
+const statsIO = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting && !counted){ counted = true; countUp(); statsIO.disconnect(); } });
+}, {threshold:0.4});
+if (statsRow) statsIO.observe(statsRow);
+
+/* ---------- quote form ---------- */
+const form = document.getElementById('quoteForm');
+const success = document.getElementById('quoteSuccess');
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function markErr(input, isErr){ input.closest('[data-field]').classList.toggle('err', isErr); }
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const from = form.from, to = form.to, email = form.email;
+  let ok = true;
+  if (!from.value.trim()){ markErr(from, true); ok = false; } else markErr(from, false);
+  if (!to.value.trim()){ markErr(to, true); ok = false; } else markErr(to, false);
+  if (!emailRe.test(email.value.trim())){ markErr(email, true); ok = false; } else markErr(email, false);
+  if (!ok) return;
+
+  document.getElementById('successLane').textContent = from.value.trim() + ' → ' + to.value.trim();
+  form.style.display = 'none';
+  success.classList.add('show');
+});
+
+document.getElementById('resetQuote').addEventListener('click', () => {
+  form.reset();
+  success.classList.remove('show');
+  form.style.display = '';
+  form.querySelectorAll('[data-field]').forEach(f => f.classList.remove('err'));
+});
+
+/* clear error as user types */
+form.querySelectorAll('input').forEach(inp => {
+  inp.addEventListener('input', () => markErr(inp, false));
+});
+</script>
+</body>
+</html>
