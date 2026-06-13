@@ -277,6 +277,22 @@ main:focus{outline:none}
 .svc .tag{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;
   color:var(--muted);margin-bottom:14px;display:block}
 
+/* Amazon Relay performance — full-width credential banner at the foot of the grid */
+.svc-amazon{grid-column:1 / -1;display:flex;align-items:center;gap:26px;
+  background:var(--ink);color:var(--on-ink);border:1px solid var(--ink-line);
+  border-radius:var(--r);padding:24px 30px}
+.amz-grade{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:14px 22px;border-radius:var(--r);
+  background:color-mix(in oklab,var(--accent) 16%, var(--ink));
+  border:1px solid color-mix(in oklab,var(--accent) 45%, transparent)}
+.amz-grade b{font-family:var(--font-display);font-weight:900;font-size:30px;line-height:1;color:var(--accent)}
+.amz-grade span{font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--on-ink-mut)}
+.amz-body{min-width:0}
+.amz-tag{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);display:block}
+.svc-amazon h3{font-size:21px;font-weight:700;color:#fff;margin-top:8px;line-height:1.18}
+.svc-amazon p{color:var(--on-ink-mut);font-size:15px;margin-top:8px;max-width:72ch;text-wrap:pretty}
+@media(max-width:560px){.svc-amazon{flex-direction:column;align-items:flex-start;gap:16px}}
+
 /* ============================================================ COVERAGE */
 .coverage{background:var(--ink);color:var(--on-ink)}
 .cov-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center}

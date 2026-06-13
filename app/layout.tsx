@@ -95,8 +95,8 @@ const jsonLd = {
   },
   knowsLanguage: ["en"],
   identifier: [
-    { "@type": "PropertyValue", propertyID: "USDOT", value: "3822610" },
-    { "@type": "PropertyValue", propertyID: "MC", value: "1383751" },
+    { "@type": "PropertyValue", propertyID: "USDOT", value: "4327636" },
+    { "@type": "PropertyValue", propertyID: "MC", value: "1689299" },
   ],
 };
 

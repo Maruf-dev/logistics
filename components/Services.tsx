@@ -49,6 +49,19 @@ export default function Services() {
               <p>{svc.desc}</p>
             </article>
           ))}
+
+          {/* Amazon Relay performance — full-width credential banner */}
+          <article className="svc-amazon reveal" style={{ ["--i"]: 6 } as CSSProperties}>
+            <div className="amz-grade" aria-hidden="true">
+              <b>{t.services.amazon.grade}</b>
+              <span>Performance</span>
+            </div>
+            <div className="amz-body">
+              <span className="amz-tag">{t.services.amazon.tag}</span>
+              <h3>{t.services.amazon.title}</h3>
+              <p>{t.services.amazon.desc}</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>

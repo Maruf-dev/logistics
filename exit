@@ -1,0 +1,171 @@
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/layout.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/opengraph-image.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'brand-spec.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/Hero.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/Stats.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'lib/i18n.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'public/og.svg', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/README.md b/README.md[m
+[1mindex 7ccbc0e..b6957bc 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -1,7 +1,7 @@[m
+ # Arrogate Transportation — Landing[m
+ [m
+ Production landing page for **Arrogate Transportation**, a licensed B2B dry-van[m
+[31m-freight carrier (Katy, TX · USDOT #3822610 · MC #1383751). Built from the design[m
+[32m+[m[32mfreight carrier (Katy, TX · USDOT #4327636 · MC #1689299). Built from the design[m
+ export in this repo (`arrogate-freight-landing.html` + `brand-spec.md`).[m
+ [m
+ **Stack:** Next.js (App Router) · React 19 · TypeScript · pure CSS design tokens.[m
+[1mdiff --git a/app/layout.tsx b/app/layout.tsx[m
+[1mindex 89e033f..330c3f2 100644[m
+[1m--- a/app/layout.tsx[m
+[1m+++ b/app/layout.tsx[m
+[36m@@ -95,8 +95,8 @@[m [mconst jsonLd = {[m
+   },[m
+   knowsLanguage: ["en"],[m
+   identifier: [[m
+[31m-    { "@type": "PropertyValue", propertyID: "USDOT", value: "3822610" },[m
+[31m-    { "@type": "PropertyValue", propertyID: "MC", value: "1383751" },[m
+[32m+[m[32m    { "@type": "PropertyValue", propertyID: "USDOT", value: "4327636" },[m
+[32m+[m[32m    { "@type": "PropertyValue", propertyID: "MC", value: "1689299" },[m
+   ],[m
+ };[m
+ [m
+[1mdiff --git a/app/opengraph-image.tsx b/app/opengraph-image.tsx[m
+[1mindex 60c6a7a..777e8a2 100644[m
+[1m--- a/app/opengraph-image.tsx[m
+[1m+++ b/app/opengraph-image.tsx[m
+[36m@@ -3,7 +3,7 @@[m [mimport { ImageResponse } from "next/og";[m
+ // Generates a raster PNG share card (social crawlers reject SVG previews).[m
+ // Drawn from the same artwork as public/og.svg, using next/og's bundled font.[m
+ export const alt =[m
+[31m-  "Harb Trucking — B2B dry-van freight across 48 states. USDOT #3822610.";[m
+[32m+[m[32m  "Harb Trucking — B2B dry-van freight across 48 states. USDOT #4327636.";[m
+ export const size = { width: 1200, height: 630 };[m
+ export const contentType = "image/png";[m
+ [m
+[36m@@ -54,8 +54,8 @@[m [mexport default function Image() {[m
+         </div>[m
+ [m
+         <div style={{ display: "flex", gap: 30, fontSize: 24 }}>[m
+[31m-          <div style={{ color: "#ef8a3c" }}>USDOT #3822610</div>[m
+[31m-          <div style={{ color: "rgba(255,255,255,0.5)" }}>MC #1383751</div>[m
+[32m+[m[32m          <div style={{ color: "#ef8a3c" }}>USDOT #4327636</div>[m
+[32m+[m[32m          <div style={{ color: "rgba(255,255,255,0.5)" }}>MC #1689299</div>[m
+         </div>[m
+       </div>[m
+     ),[m
+[1mdiff --git a/brand-spec.md b/brand-spec.md[m
+[1mindex 791d29f..8e6a1af 100644[m
+[1m--- a/brand-spec.md[m
+[1m+++ b/brand-spec.md[m
+[36m@@ -3,7 +3,7 @@[m
+ > Source note: the reference site (arrogatetransportation.com) is fully[m
+ > JS-rendered, so no real CSS/colors were extractable. This is an **inferred**[m
+ > industrial-freight system grounded in the company's real public profile[m
+[31m-> (USDOT #3822610, MC #1383751, dry-van carrier, Katy TX), not copied tokens.[m
+[32m+[m[32m> (USDOT #4327636, MC #1689299, dry-van carrier, Katy TX), not copied tokens.[m
+ > Audience: B2B shippers & distributors.[m
+ [m
+ ## Color tokens (OKLch)[m
+[1mdiff --git a/components/Hero.tsx b/components/Hero.tsx[m
+[1mindex f208c20..8966245 100644[m
+[1m--- a/components/Hero.tsx[m
+[1m+++ b/components/Hero.tsx[m
+[36m@@ -96,10 +96,10 @@[m [mexport default function Hero() {[m
+                 {h.authority} <b>{h.active}</b>[m
+               </span>[m
+               <span className="auth-chip">[m
+[31m-                USDOT <b>#3822610</b>[m
+[32m+[m[32m                USDOT <b>#4327636</b>[m
+               </span>[m
+               <span className="auth-chip">[m
+[31m-                MC <b>#1383751</b>[m
+[32m+[m[32m                MC <b>#1689299</b>[m
+               </span>[m
+             </div>[m
+           </div>[m
+[1mdiff --git a/components/Stats.tsx b/components/Stats.tsx[m
+[1mindex c5c7720..e66deaa 100644[m
+[1m--- a/components/Stats.tsx[m
+[1m+++ b/components/Stats.tsx[m
+[36m@@ -3,7 +3,7 @@[m
+ import { t } from "@/lib/i18n";[m
+ [m
+ /** Display values (language-independent). Order matches `t.stats`. */[m
+[31m-const VALUES = [48, 53, 24, 2];[m
+[32m+[m[32mconst VALUES = [48, 53, 24, 98];[m
+ [m
+ export default function Stats() {[m
+   return ([m
+[1mdiff --git a/lib/i18n.ts b/lib/i18n.ts[m
+[1mindex 6e401aa..cb5e2d6 100644[m
+[1m--- a/lib/i18n.ts[m
+[1m+++ b/lib/i18n.ts[m
+[36m@@ -23,7 +23,7 @@[m [mexport const t = {[m
+     skip: "Skip to content",[m
+   },[m
+   hero: {[m
+[31m-    kicker: "B2B Freight · Katy, Texas",[m
+[32m+[m[32m    kicker: "B2B Freight · Chicago, Illinois",[m
+     titleBefore: "Freight that arrives ",[m
+     titleEm: "on time",[m
+     titleAfter: " — load after load.",[m
+[36m@@ -37,7 +37,7 @@[m [mexport const t = {[m
+     { prefix: "", suffix: "", label: "states in our service area" },[m
+     { prefix: "", suffix: "ft", label: "dry van — fleet standard" },[m
+     { prefix: "", suffix: "/7", label: "dispatch & support" },[m
+[31m-    { prefix: "≤", suffix: " h", label: "quote response time" },[m
+[32m+[m[32m    { prefix: "", suffix: "%", label: "on-time delivery" },[m
+   ],[m
+   services: {[m
+     kicker: "Services",[m
+[36m@@ -127,7 +127,7 @@[m [mexport const t = {[m
+       },[m
+       {[m
+         title: "Active authority & insurance",[m
+[31m-        desc: "USDOT #3822610, MC #1383751 — active interstate authority and cargo insurance coverage.",[m
+[32m+[m[32m        desc: "USDOT #4327636, MC #1689299 — active interstate authority and cargo insurance coverage.",[m
+       },[m
+       {[m
+         title: "Live dispatch line",[m
+[36m@@ -149,7 +149,7 @@[m [mexport const t = {[m
+       emailLabel: "Dispatch e-mail",[m
+       email: "dispatch@harbtrucking.com",[m
+       authorityLabel: "Authority",[m
+[31m-      authority: "USDOT #3822610 · MC #1383751",[m
+[32m+[m[32m      authority: "USDOT #4327636 · MC #1689299",[m
+     },[m
+     form: {[m
+       heading: "Quote request",[m
+[36m@@ -194,7 +194,7 @@[m [mexport const t = {[m
+       { href: "#quote", label: "Request a quote" },[m
+     ],[m
+     contactTitle: "Contact",[m
+[31m-    contact: ["Katy, Texas, USA", "dispatch@harbtrucking.com", "Dispatch: 24/7", "USDOT #3822610 · MC #1383751"],[m
+[32m+[m[32m    contact: ["Katy, Texas, USA", "dispatch@harbtrucking.com", "Dispatch: 24/7", "USDOT #4327636 · MC #1689299"],[m
+     copyright: "© 2026 Harb Trucking. All rights reserved.",[m
+     tagline: "Made for B2B freight · Dry Van · 48 States",[m
+   },[m
+[1mdiff --git a/public/og.svg b/public/og.svg[m
+[1mindex e406f7c..1d9a11a 100644[m
+[1m--- a/public/og.svg[m
+[1m+++ b/public/og.svg[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Harb Trucking — B2B dry-van freight across 48 states. USDOT #3822610.">[m
+[32m+[m[32m<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Harb Trucking — B2B dry-van freight across 48 states. USDOT #4327636.">[m
+   <rect width="1200" height="630" fill="#10131c"/>[m
+   <g fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1">[m
+     <line x1="0" y1="120" x2="1200" y2="120"/>[m
+[36m@@ -9,6 +9,6 @@[m
+   <circle cx="1104" cy="196" r="9" fill="#ffffff"/>[m
+   <text x="96" y="300" fill="#ffffff" font-family="Archivo, 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="78" font-weight="800" letter-spacing="-1.5">Harb Trucking</text>[m
+   <text x="98" y="362" fill="#ffffff" fill-opacity="0.72" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-size="32" font-weight="500">B2B dry-van freight across 48 states</text>[m
+[31m-  <text x="98" y="560" fill="#ef8a3c" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="24" font-weight="600" letter-spacing="1">USDOT #3822610</text>[m
+[31m-  <text x="372" y="560" fill="#ffffff" fill-opacity="0.55" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="24" font-weight="500" letter-spacing="1">MC #1383751</text>[m
+[32m+[m[32m  <text x="98" y="560" fill="#ef8a3c" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="24" font-weight="600" letter-spacing="1">USDOT #4327636</text>[m
+[32m+[m[32m  <text x="372" y="560" fill="#ffffff" fill-opacity="0.55" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="24" font-weight="500" letter-spacing="1">MC #1689299</text>[m
+ </svg>[m

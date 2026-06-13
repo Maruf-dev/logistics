@@ -23,7 +23,7 @@ export const t = {
     skip: "Skip to content",
   },
   hero: {
-    kicker: "B2B Freight · Katy, Texas",
+    kicker: "B2B Freight · Chicago, Illinois",
     titleBefore: "Freight that arrives ",
     titleEm: "on time",
     titleAfter: " — load after load.",
@@ -37,7 +37,7 @@ export const t = {
     { prefix: "", suffix: "", label: "states in our service area" },
     { prefix: "", suffix: "ft", label: "dry van — fleet standard" },
     { prefix: "", suffix: "/7", label: "dispatch & support" },
-    { prefix: "≤", suffix: " h", label: "quote response time" },
+    { prefix: "", suffix: "%", label: "on-time delivery" },
   ],
   services: {
     kicker: "Services",
@@ -75,6 +75,12 @@ export const t = {
         desc: "BOL, POD, and closing documents digitally — right after unloading, no waiting on mail.",
       },
     ],
+    amazon: {
+      tag: "Amazon Relay",
+      grade: "A–A+",
+      title: "Amazon-approved carrier",
+      desc: "Approved on Amazon Relay and held at an A to A+ performance tier — on-time, in-policy, and audit-ready, load after load.",
+    },
   },
   coverage: {
     kicker: "Coverage",
@@ -127,7 +133,7 @@ export const t = {
       },
       {
         title: "Active authority & insurance",
-        desc: "USDOT #3822610, MC #1383751 — active interstate authority and cargo insurance coverage.",
+        desc: "USDOT #4327636, MC #1689299 — active interstate authority and cargo insurance coverage.",
       },
       {
         title: "Live dispatch line",
@@ -149,7 +155,7 @@ export const t = {
       emailLabel: "Dispatch e-mail",
       email: "dispatch@harbtrucking.com",
       authorityLabel: "Authority",
-      authority: "USDOT #3822610 · MC #1383751",
+      authority: "USDOT #4327636 · MC #1689299",
     },
     form: {
       heading: "Quote request",
@@ -194,7 +200,7 @@ export const t = {
       { href: "#quote", label: "Request a quote" },
     ],
     contactTitle: "Contact",
-    contact: ["Katy, Texas, USA", "dispatch@harbtrucking.com", "Dispatch: 24/7", "USDOT #3822610 · MC #1383751"],
+    contact: ["Katy, Texas, USA", "dispatch@harbtrucking.com", "Dispatch: 24/7", "USDOT #4327636 · MC #1689299"],
     copyright: "© 2026 Harb Trucking. All rights reserved.",
     tagline: "Made for B2B freight · Dry Van · 48 States",
   },

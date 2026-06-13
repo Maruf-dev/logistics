@@ -3,7 +3,7 @@
 > Source note: the reference site (arrogatetransportation.com) is fully
 > JS-rendered, so no real CSS/colors were extractable. This is an **inferred**
 > industrial-freight system grounded in the company's real public profile
-> (USDOT #3822610, MC #1383751, dry-van carrier, Katy TX), not copied tokens.
+> (USDOT #4327636, MC #1689299, dry-van carrier, Katy TX), not copied tokens.
 > Audience: B2B shippers & distributors.
 
 ## Color tokens (OKLch)

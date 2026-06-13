@@ -3,7 +3,7 @@
 import { t } from "@/lib/i18n";
 
 /** Display values (language-independent). Order matches `t.stats`. */
-const VALUES = [48, 53, 24, 2];
+const VALUES = [48, 53, 24, 98];
 
 export default function Stats() {
   return (

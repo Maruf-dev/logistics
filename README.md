@@ -1,7 +1,7 @@
 # Arrogate Transportation — Landing
 
 Production landing page for **Arrogate Transportation**, a licensed B2B dry-van
-freight carrier (Katy, TX · USDOT #3822610 · MC #1383751). Built from the design
+freight carrier (Katy, TX · USDOT #4327636 · MC #1689299). Built from the design
 export in this repo (`arrogate-freight-landing.html` + `brand-spec.md`).
 
 **Stack:** Next.js (App Router) · React 19 · TypeScript · pure CSS design tokens.

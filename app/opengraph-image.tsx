@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 // Generates a raster PNG share card (social crawlers reject SVG previews).
 // Drawn from the same artwork as public/og.svg, using next/og's bundled font.
 export const alt =
-  "Harb Trucking — B2B dry-van freight across 48 states. USDOT #3822610.";
+  "Harb Trucking — B2B dry-van freight across 48 states. USDOT #4327636.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -54,8 +54,8 @@ export default function Image() {
         </div>
 
         <div style={{ display: "flex", gap: 30, fontSize: 24 }}>
-          <div style={{ color: "#ef8a3c" }}>USDOT #3822610</div>
-          <div style={{ color: "rgba(255,255,255,0.5)" }}>MC #1383751</div>
+          <div style={{ color: "#ef8a3c" }}>USDOT #4327636</div>
+          <div style={{ color: "rgba(255,255,255,0.5)" }}>MC #1689299</div>
         </div>
       </div>
     ),

@@ -96,10 +96,10 @@ export default function Hero() {
                 {h.authority} <b>{h.active}</b>
               </span>
               <span className="auth-chip">
-                USDOT <b>#3822610</b>
+                USDOT <b>#4327636</b>
               </span>
               <span className="auth-chip">
-                MC <b>#1383751</b>
+                MC <b>#1689299</b>
               </span>
             </div>
           </div>
