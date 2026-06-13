@@ -291,10 +291,25 @@ main:focus{outline:none}
 .lane .ln-cities .arr::after{content:"";position:absolute;right:0;top:-2px;width:5px;height:5px;border-top:1px solid var(--accent);border-right:1px solid var(--accent);transform:rotate(45deg)}
 .lane .ln-time{font-family:var(--font-mono);font-size:13px;color:var(--on-ink-mut);font-variant-numeric:tabular-nums}
 .map-wrap{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:var(--r-lg);padding:30px}
-.map-wrap svg{width:100%;height:auto}
-.map-wrap .mp-line{stroke:var(--accent);stroke-width:1.6;fill:none;stroke-dasharray:4 6;opacity:.85}
-.map-wrap .mp-node{fill:var(--on-ink-mut)}
-.map-wrap .mp-hub{fill:var(--accent)}
+.map-wrap svg{width:100%;height:auto;overflow:visible}
+/* lanes: dotted pattern flows slowly outward from the hub */
+.map-wrap .mp-line{stroke:var(--accent);stroke-width:1.6;fill:none;stroke-dasharray:4 6;opacity:.85;
+  animation:covFlow 2.4s linear infinite}
+@keyframes covFlow{to{stroke-dashoffset:-20}}
+/* destination nodes carry a soft accent glow so arriving dots read as "lit up" */
+.map-wrap .mp-node{fill:var(--on-ink-mut);filter:drop-shadow(0 0 2.5px color-mix(in oklab,var(--accent) 65%, transparent))}
+/* shipment dots riding each lane */
+.map-wrap .mp-pulse{fill:#fff;filter:drop-shadow(0 0 3px var(--accent))}
+/* radar pings expanding from the dispatch hub */
+.map-wrap .mp-ping{fill:none;stroke:var(--accent);stroke-width:1.5;
+  transform-box:fill-box;transform-origin:center;animation:covPing 2.8s ease-out infinite}
+.map-wrap .mp-ping.p2{animation-delay:1.4s}
+@keyframes covPing{0%{transform:scale(.45);opacity:.5}70%{opacity:0}100%{transform:scale(3.4);opacity:0}}
+/* hub: accent core with a gentle heartbeat + standing base ring */
+.map-wrap .mp-hub{fill:var(--accent);transform-box:fill-box;transform-origin:center;
+  filter:drop-shadow(0 0 4px color-mix(in oklab,var(--accent) 70%, transparent));
+  animation:covHub 2.8s ease-in-out infinite}
+@keyframes covHub{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
 .map-wrap .mp-hub-ring{fill:none;stroke:var(--accent);stroke-width:1.4;opacity:.4}
 
 /* ============================================================ PROCESS */
@@ -349,9 +364,22 @@ main:focus{outline:none}
 .gps-dot{fill:var(--accent)}
 .gps-label{font-family:var(--font-mono);font-size:9px;fill:var(--accent-d);letter-spacing:0.1em}
 
-/* blueprint + loadout render statically (no draw-on / stagger) */
-.td-draw{stroke-dasharray:none;stroke-dashoffset:0}
-.pallet{opacity:1}
+/* the blueprint traces itself in when the diagram scrolls into view — tractor,
+   then trailer, then dimensions — and the pallets load one-by-one (front→back) */
+.td-draw{stroke-dasharray:1;stroke-dashoffset:1}
+.trailer-diagram.in path.td-out.td-draw{animation:tdDraw .9s var(--ease-out) forwards}
+.trailer-diagram.in rect.td-out.td-draw{animation:tdDraw .9s var(--ease-out) .5s both}
+.trailer-diagram.in .td-dim.td-draw{animation:tdDraw .8s var(--ease-out) 1s both}
+@keyframes tdDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+
+.pallet{opacity:0}
+.trailer-diagram.in .pallet{animation:tdLoad .5s var(--ease-out) both}
+@keyframes tdLoad{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+
+/* live GPS ping rippling off the cab-roof antenna */
+.gps-ping{fill:none;stroke:var(--accent);stroke-width:1.3;
+  transform-box:fill-box;transform-origin:center;animation:gpsPing 2.6s ease-out infinite}
+@keyframes gpsPing{0%{transform:scale(1);opacity:.55}80%{opacity:0}100%{transform:scale(4.2);opacity:0}}
 
 /* ---- feature chips ---- */
 .eq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
@@ -526,6 +554,6 @@ main:focus{outline:none}
     transition-duration:.001ms !important;scroll-behavior:auto !important}
   .reveal{opacity:1;transform:none;transition-delay:0s !important}
   .drawer a{opacity:1 !important;transform:none !important;transition-delay:0s !important}
-  /* SMIL motion ignores the rules above — hide the rolling trucks outright */
-  .trucks{display:none}
+  /* SMIL motion ignores the rules above — hide the moving dots outright */
+  .trucks,.mp-pulses{display:none}
 }

@@ -70,6 +70,7 @@ export default function Equipment() {
 
               {/* GPS antenna + live ping (on the cab roof) */}
               <line className="td-gps" x1="112" y1="76" x2="112" y2="62" />
+              <circle className="gps-ping" cx="112" cy="62" r="2.4" />
               <circle className="gps-dot" cx="112" cy="62" r="2.4" />
               <text className="gps-label" x="120" y="65">GPS</text>
 
@@ -83,8 +84,8 @@ export default function Equipment() {
 
               {/* pallet loadout (renders statically) */}
               <g className="loadout">
-                {PALLETS.map((px) => (
-                  <g className="pallet" key={px}>
+                {PALLETS.map((px, i) => (
+                  <g className="pallet" key={px} style={{ animationDelay: `${1.1 + i * 0.05}s` }}>
                     <rect className="pallet-box" x={px} y={120} width={21} height={50} rx={1.5} />
                     <rect className="pallet-deck" x={px} y={170} width={21} height={4} />
                   </g>

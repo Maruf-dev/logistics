@@ -2,8 +2,32 @@
 
 import { t } from "@/lib/i18n";
 
+// Katy, TX dispatch hub + the five destination nodes (viewBox 460 x 300).
+// `lx`/`ly` are the manually-tuned label anchors kept from the original layout.
+const HUB = { x: 150, y: 210 };
+const DESTS = [
+  { key: "chicago", x: 300, y: 90, lx: 312, ly: 86 },
+  { key: "denver", x: 120, y: 110, lx: 78, ly: 106 },
+  { key: "atlanta", x: 340, y: 200, lx: 352, ly: 204 },
+  { key: "la", x: 60, y: 150, lx: 6, ly: 146 },
+  { key: "miami", x: 250, y: 250, lx: 262, ly: 264 },
+] as const;
+
 export default function Coverage() {
   const c = t.coverage;
+
+  // One shipment dot rides each lane hub→city. Constant speed (so longer lanes
+  // take longer) with a staggered, deterministic start — no SSR/client drift.
+  const lanes = DESTS.map((d, i) => {
+    const len = Math.hypot(d.x - HUB.x, d.y - HUB.y);
+    return {
+      ...d,
+      label: c.map[d.key],
+      path: `M${HUB.x} ${HUB.y}L${d.x} ${d.y}`,
+      dur: Math.max(1.6, len / 52).toFixed(2),
+      begin: (-(i * 0.7)).toFixed(2),
+    };
+  });
 
   return (
     <section className="section coverage eyebrow-dark" id="coverage">
@@ -28,37 +52,44 @@ export default function Coverage() {
           </div>
           <div className="map-wrap reveal">
             <svg viewBox="0 0 460 300" aria-label={t.a11y.coverageMap}>
-              {/* abstract route lines from hub */}
-              <path className="mp-line" d="M150 210 L300 90" />
-              <path className="mp-line" d="M150 210 L120 110" />
-              <path className="mp-line" d="M150 210 L340 200" />
-              <path className="mp-line" d="M150 210 L60 150" />
-              <path className="mp-line" d="M150 210 L250 250" />
+              {/* route lines from the hub — dashes flow slowly outward */}
+              {lanes.map((l) => (
+                <path key={l.key} className="mp-line" d={l.path} />
+              ))}
+
+              {/* radar pings rippling out from the dispatch hub */}
+              <circle className="mp-ping" cx={HUB.x} cy={HUB.y} r="7" />
+              <circle className="mp-ping p2" cx={HUB.x} cy={HUB.y} r="7" />
+
+              {/* shipment dots riding each lane, hub → city */}
+              <g className="mp-pulses" aria-hidden="true">
+                {lanes.map((l) => (
+                  <circle key={l.key} className="mp-pulse" r="3.1">
+                    <animateMotion
+                      dur={`${l.dur}s`}
+                      begin={`${l.begin}s`}
+                      repeatCount="indefinite"
+                      path={l.path}
+                    />
+                  </circle>
+                ))}
+              </g>
+
               {/* dest nodes */}
-              <circle className="mp-node" cx="300" cy="90" r="5" />
-              <circle className="mp-node" cx="120" cy="110" r="5" />
-              <circle className="mp-node" cx="340" cy="200" r="5" />
-              <circle className="mp-node" cx="60" cy="150" r="5" />
-              <circle className="mp-node" cx="250" cy="250" r="5" />
+              {lanes.map((l) => (
+                <circle key={l.key} className="mp-node" cx={l.x} cy={l.y} r="5" />
+              ))}
+
               {/* labels */}
-              <text className="node-label" x="312" y="86">
-                {c.map.chicago}
-              </text>
-              <text className="node-label" x="78" y="106">
-                {c.map.denver}
-              </text>
-              <text className="node-label" x="352" y="204">
-                {c.map.atlanta}
-              </text>
-              <text className="node-label" x="6" y="146">
-                {c.map.la}
-              </text>
-              <text className="node-label" x="262" y="264">
-                {c.map.miami}
-              </text>
+              {lanes.map((l) => (
+                <text key={l.key} className="node-label" x={l.lx} y={l.ly}>
+                  {l.label}
+                </text>
+              ))}
+
               {/* hub */}
-              <circle className="mp-hub-ring" cx="150" cy="210" r="6" />
-              <circle className="mp-hub" cx="150" cy="210" r="6.5" />
+              <circle className="mp-hub-ring" cx={HUB.x} cy={HUB.y} r="6" />
+              <circle className="mp-hub" cx={HUB.x} cy={HUB.y} r="6.5" />
               <text x="92" y="232" fill="#fff" style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 14 }}>
                 {c.map.hub}
               </text>
