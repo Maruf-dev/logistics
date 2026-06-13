@@ -1,13 +1,11 @@
 "use client";
 
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 /** Display values (language-independent). Order matches `t.stats`. */
 const VALUES = [48, 53, 24, 2];
 
 export default function Stats() {
-  const { t } = useI18n();
-
   return (
     <section className="stats">
       <div className="wrap">

@@ -1,11 +1,9 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 export default function Process() {
-  const { t } = useI18n();
-
   return (
     <section className="section" id="process">
       <div className="wrap">

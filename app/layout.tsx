@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, JetBrains_Mono } from "next/font/google";
-import { LanguageProvider } from "@/components/LanguageProvider";
 import "./globals.css";
 
-// Archivo ships Latin only in next/font; Russian headings fall back to system-ui
-// via the --font-display chain in globals.css. English (primary) uses Archivo.
 // Only weights actually referenced in the stylesheet are requested.
 const archivo = Archivo({
   subsets: ["latin"],
@@ -14,7 +11,7 @@ const archivo = Archivo({
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
   weight: ["400", "600"],
   variable: "--font-jetbrains",
   display: "swap",
@@ -48,8 +45,6 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    // Language is a same-URL client toggle (no /ru route), so the honest signal
-    // is a single self-canonical — not conflicting per-language hreflang alternates.
     canonical: "/",
   },
   openGraph: {
@@ -58,7 +53,6 @@ export const metadata: Metadata = {
       "Licensed dry-van carrier. Direct rates, live dispatch, and tracking from pickup to delivery across all 48 states.",
     type: "website",
     locale: "en_US",
-    alternateLocale: "ru_RU",
     siteName: "Harb Trucking",
     // og:image is generated as a raster PNG by app/opengraph-image.tsx (social
     // crawlers don't render SVG), wired automatically via the file convention.
@@ -99,7 +93,7 @@ const jsonLd = {
     addressRegion: "TX",
     addressCountry: "US",
   },
-  knowsLanguage: ["en", "ru"],
+  knowsLanguage: ["en"],
   identifier: [
     { "@type": "PropertyValue", propertyID: "USDOT", value: "3822610" },
     { "@type": "PropertyValue", propertyID: "MC", value: "1383751" },
@@ -116,7 +110,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <LanguageProvider>{children}</LanguageProvider>
+        {children}
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 /** Icons stay in code; zipped with `t.why.items` by index. */
 const ICONS: ReactNode[] = [
@@ -24,8 +24,6 @@ const ICONS: ReactNode[] = [
 ];
 
 export default function Why() {
-  const { t } = useI18n();
-
   return (
     <section className="section why eyebrow-dark">
       <div className="wrap">

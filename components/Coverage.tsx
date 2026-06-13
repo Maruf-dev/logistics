@@ -1,9 +1,8 @@
 "use client";
 
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 export default function Coverage() {
-  const { t } = useI18n();
   const c = t.coverage;
 
   return (

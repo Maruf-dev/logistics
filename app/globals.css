@@ -67,10 +67,6 @@ body{
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 h1,h2,h3,h4{font-family:var(--font-display);font-weight:800;line-height:1.04;letter-spacing:-0.02em;color:var(--fg);text-wrap:balance}
-/* Russian headings fall back to system-ui (Archivo is latin-only); ease the
-   Archivo-calibrated weight/tracking so Cyrillic doesn't render cramped. RU only. */
-:lang(ru) h1,:lang(ru) h2,:lang(ru) h3,:lang(ru) h4{letter-spacing:-0.005em;font-weight:700}
-:lang(ru) .hero h1{letter-spacing:-0.01em;font-weight:700}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
 .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4.5vw,28px)}
@@ -160,19 +156,6 @@ main:focus{outline:none}
 .menu-btn,.dr-close{transition:color var(--dur-1), transform .12s ease}
 .menu-btn:hover,.dr-close:hover{color:var(--accent)}
 .menu-btn:active,.dr-close:active{transform:scale(.92)}
-
-/* language toggle (EN / RU) */
-.lang-toggle{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--ink-line);border-radius:99px}
-.lang-opt{
-  font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.06em;
-  padding:5px 11px;border:0;border-radius:99px;cursor:pointer;background:transparent;
-  color:var(--on-ink-mut);transition:background var(--dur-1), color var(--dur-1), transform var(--dur-1);
-}
-.lang-opt:hover{color:#fff}
-.lang-opt.active{background:var(--accent);color:oklch(22% 0.04 60)}
-.lang-opt:active{transform:translateY(1px)}
-.drawer .lang-toggle{margin-top:28px;align-self:flex-start}
-.drawer .lang-opt{font-size:13px;padding:7px 15px}
 
 /* ============================================================ HERO */
 .hero{
@@ -514,7 +497,6 @@ main:focus{outline:none}
 }
 /* touch devices: meet the ~44px target minimum without affecting precision pointers */
 @media (pointer:coarse){
-  .lang-opt{padding:9px 13px}
   .menu-btn{width:44px;height:44px}
   .foot-col a{padding:9px 0}
 }

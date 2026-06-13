@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Brand from "./Brand";
-import LangToggle from "./LangToggle";
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 const ArrowIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
@@ -13,7 +12,6 @@ const ArrowIcon = () => (
 );
 
 export default function SiteHeader() {
-  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
@@ -65,7 +63,6 @@ export default function SiteHeader() {
             ))}
           </nav>
           <div className="nav-right">
-            <LangToggle />
             <Link href="#quote" className="btn btn-accent">
               {t.nav.quote}
             </Link>
@@ -113,7 +110,6 @@ export default function SiteHeader() {
             {link.label}
           </Link>
         ))}
-        <LangToggle />
         <Link
           href="#quote"
           className="btn btn-accent"

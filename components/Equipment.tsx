@@ -1,6 +1,6 @@
 "use client";
 
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 // One small line-icon per spec row (order mirrors t.equipment.specs).
 const SPEC_ICONS = [
@@ -39,15 +39,13 @@ const PALLETS = Array.from({ length: 13 }, (_, i) => 176 + i * 24);
 const AXLES = [70, 118, 154, 430, 466];
 
 export default function Equipment() {
-  const { t, lang } = useI18n();
-
   return (
     <section className="section equip" id="equipment">
       <div className="wrap">
         <div className="eq-grid">
           <div className="trailer-diagram reveal">
             <div className="td-head">
-              <span>{lang === "ru" ? "Сухой фургон · боковая проекция" : "Dry van · side elevation"}</span>
+              <span>Dry van · side elevation</span>
               <span>FIG-53</span>
             </div>
             <svg viewBox="0 0 520 250" aria-label={t.a11y.trailer} role="img">
@@ -93,7 +91,7 @@ export default function Equipment() {
                 ))}
               </g>
               <text className="pallet-note" x="334" y="104" textAnchor="middle">
-                {lang === "ru" ? "26 EUR-палет" : "26 EUR pallets"}
+                26 EUR pallets
               </text>
 
               {/* landing gear (retracted) + rear mud flap */}
@@ -132,7 +130,7 @@ export default function Equipment() {
               <span className="eq-chip"><span className="dot" />53′ Dry Van</span>
               <span className="eq-chip"><span className="dot" />GPS 24/7</span>
               <span className="eq-chip"><span className="dot" />ELD</span>
-              <span className="eq-chip"><span className="dot" />{lang === "ru" ? "26 палет" : "26 pallets"}</span>
+              <span className="eq-chip"><span className="dot" />26 pallets</span>
             </div>
             <ul className="eq-specs">
               {t.equipment.specs.map((spec, i) => (

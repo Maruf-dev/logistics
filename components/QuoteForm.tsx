@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 type Errors = { from?: boolean; to?: boolean; email?: boolean };
 
 export default function QuoteForm() {
-  const { t } = useI18n();
   const q = t.quote;
   const f = q.form;
 

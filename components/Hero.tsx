@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 /* ------------------------------------------------------------------
    Right-column network map.
@@ -65,11 +65,7 @@ const TRUCKS = ROUTES.map(([from, to], i) => {
 });
 
 export default function Hero() {
-  const { t, lang } = useI18n();
   const h = t.hero;
-
-  const cityName = (node: MapNode) =>
-    node.main && lang === "ru" ? "Хьюстон" : node.hub;
 
   return (
     <section className="hero eyebrow-dark">
@@ -111,10 +107,10 @@ export default function Hero() {
           <div className="hero-vis">
             <div className="route">
               <div className="route-head">
-                <span className="route-title">{lang === "ru" ? "Сеть маршрутов · США" : "U.S. lane network"}</span>
+                <span className="route-title">U.S. lane network</span>
                 <span className="route-legend" aria-hidden="true">
-                  <span className="rl-item"><i className="rl-hub" />{lang === "ru" ? "Хаб" : "Hub"}</span>
-                  <span className="rl-item"><i className="rl-lane" />{lang === "ru" ? "Рейс" : "Lane"}</span>
+                  <span className="rl-item"><i className="rl-hub" />Hub</span>
+                  <span className="rl-item"><i className="rl-lane" />Lane</span>
                 </span>
               </div>
               <svg viewBox="0 0 1000 480" aria-label={t.a11y.heroRoute} role="img">
@@ -179,11 +175,11 @@ export default function Hero() {
                       <g key={i}>
                         {n.main && (
                           <text className="hub-tag" x={n.x + dx} y={ly - 22} textAnchor={anchor}>
-                            {lang === "ru" ? "ХАБ" : "DISPATCH HUB"}
+                            DISPATCH HUB
                           </text>
                         )}
                         <text className={n.main ? "hub-label main" : "hub-label"} x={n.x + dx} y={ly} textAnchor={anchor}>
-                          {cityName(n)}
+                          {n.hub}
                         </text>
                       </g>
                     );

@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import Brand from "./Brand";
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 export default function Footer() {
-  const { t } = useI18n();
   const fo = t.footer;
 
   return (

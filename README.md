@@ -22,36 +22,26 @@ npm run typecheck  # tsc --noEmit
 npm run lint       # next lint
 ```
 
-## Languages
+## Copy
 
-English is the **primary** language; Russian is secondary via an **EN / RU toggle**
-in the header (and mobile drawer). The choice persists to `localStorage` and the
-`<html lang>` attribute updates with it.
-
-- All copy lives in one place: [`lib/i18n.ts`](lib/i18n.ts) (`en` is the source of
-  truth, `ru` mirrors its shape — TypeScript enforces that they stay in sync).
-- The default render (SSR) is English, so the static HTML and SEO metadata are
-  English with no hydration flash.
-- Note: Archivo (the display font) ships Latin-only in `next/font`, so Russian
-  **headings** fall back to `system-ui` via the `--font-display` chain in
-  `app/globals.css`. Body/mono text (JetBrains Mono includes Cyrillic) renders fine.
+The site is **English only**. All user-facing copy lives in one place —
+[`lib/i18n.ts`](lib/i18n.ts), exported as a single `t` object that components
+import directly. `<html lang>` is a static `en` set in `app/layout.tsx`.
 
 ## Structure
 
 ```
 app/
-  layout.tsx        Fonts (next/font), SEO metadata, <LanguageProvider>
+  layout.tsx        Fonts (next/font), SEO metadata
   page.tsx          Composes the section components
   globals.css       Design tokens + all component styles (ported from the export)
 components/
-  LanguageProvider  EN/RU context, localStorage persistence, <html lang> sync
-  LangToggle        EN / RU segmented control
   SiteHeader        Fixed header, scroll state, mobile drawer
   Hero  Stats  Services  Coverage  Process  Equipment  Why  QuoteForm  Footer
   Brand             Logo + wordmark
   ScrollReveal      Single IntersectionObserver driving all `.reveal` elements
 lib/
-  i18n.ts           EN + RU dictionary
+  i18n.ts           Copy dictionary (the `t` object)
 ```
 
 ## Design fidelity

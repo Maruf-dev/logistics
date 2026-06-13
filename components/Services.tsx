@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { useI18n } from "./LanguageProvider";
+import { t } from "@/lib/i18n";
 
 /** Icons stay in code (not translatable); zipped with `t.services.items` by index. */
 const ICONS: ReactNode[] = [
@@ -32,8 +32,6 @@ const ICONS: ReactNode[] = [
 ];
 
 export default function Services() {
-  const { t } = useI18n();
-
   return (
     <section className="section" id="services">
       <div className="wrap">
