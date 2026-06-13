@@ -48,6 +48,22 @@ const EDGES: [number, number][] = (() => {
   return out;
 })();
 
+// One truck rolls along each lane. Directions alternate (hub↔city) and the
+// timings are derived deterministically from the index — no randomness — so
+// SSR and client agree and the fleet stays spread out along the lanes instead
+// of pulsing from Houston in unison. Constant cruising speed, slow and quiet.
+const TRUCKS = ROUTES.map(([from, to], i) => {
+  const a = NODES[from];
+  const b = NODES[to];
+  const [p, q] = i % 2 === 0 ? [a, b] : [b, a]; // alternate travel direction
+  const len = Math.hypot(a.x - b.x, a.y - b.y);
+  return {
+    path: `M${p.x} ${p.y}L${q.x} ${q.y}`,
+    dur: Math.max(3.6, len / 56).toFixed(1), // ~constant speed across lanes
+    begin: (-(i * 1.6 + (i % 3) * 0.6)).toFixed(1), // pre-distribute along lanes
+  };
+});
+
 export default function Hero() {
   const { t, lang } = useI18n();
   const h = t.hero;
@@ -131,6 +147,24 @@ export default function Hero() {
                     ) : (
                       <circle key={i} cx={n.x} cy={n.y} r={4.6} className="hub-core" />
                     )
+                  ))}
+                </g>
+
+                {/* rolling fleet — one slow, staggered truck per lane */}
+                <g className="trucks" aria-hidden="true">
+                  {TRUCKS.map((tk, i) => (
+                    <g key={i} className="truck">
+                      <rect className="tk-trailer" x={-15} y={-5} width={19} height={10} rx={2.4} />
+                      <rect className="tk-cab" x={4} y={-4.2} width={8} height={8.4} rx={2} />
+                      <rect className="tk-gap" x={2} y={-4.2} width={2} height={8.4} />
+                      <animateMotion
+                        dur={`${tk.dur}s`}
+                        begin={`${tk.begin}s`}
+                        repeatCount="indefinite"
+                        rotate="auto"
+                        path={tk.path}
+                      />
+                    </g>
                   ))}
                 </g>
 
