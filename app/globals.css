@@ -312,6 +312,9 @@ main:focus{outline:none}
 .map-wrap .mp-line{stroke:var(--accent);stroke-width:1.6;fill:none;stroke-dasharray:4 6;opacity:.85;
   animation:covFlow 2.4s linear infinite}
 @keyframes covFlow{to{stroke-dashoffset:-20}}
+/* secondary city-to-city corridors — fainter, slower, no shipment dots */
+.map-wrap .mp-conn{stroke:var(--accent);stroke-width:1.2;fill:none;stroke-dasharray:3 7;opacity:.4;
+  animation:covFlow 3.4s linear infinite}
 /* destination nodes carry a soft accent glow so arriving dots read as "lit up" */
 .map-wrap .mp-node{fill:var(--on-ink-mut);filter:drop-shadow(0 0 2.5px color-mix(in oklab,var(--accent) 65%, transparent))}
 /* shipment dots riding each lane */
@@ -457,7 +460,7 @@ main:focus{outline:none}
 .apply-contact .ac-row{display:flex;gap:12px;align-items:center}
 .apply-contact .ic{width:36px;height:36px;border-radius:var(--r-ic);border:1px solid var(--ink-line);display:grid;place-items:center;color:var(--accent);flex:0 0 auto}
 .apply-contact .ic svg{width:18px;height:18px}
-.apply-contact .ac-row span{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-ink-mut)}
+.apply-contact .ac-row div span{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-ink-mut)}
 .apply-contact .ac-row b{font-weight:600;color:#fff;font-size:14px;overflow-wrap:anywhere}
 .apply-contact a{color:inherit;text-decoration:none;border-bottom:1px solid var(--ink-line);transition:border-color var(--dur-2) var(--ease-std)}
 .apply-contact a:hover{border-bottom-color:var(--accent)}

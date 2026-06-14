@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     "B2B logistics",
     "trucking",
     "Harb Trucking",
-    "Katy Texas",
+    "Chicago Illinois",
   ],
   authors: [{ name: "Harb Trucking" }],
   robots: {
@@ -89,8 +89,8 @@ const jsonLd = {
   areaServed: { "@type": "Country", name: "United States" },
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Katy",
-    addressRegion: "TX",
+    addressLocality: "Chicago",
+    addressRegion: "IL",
     addressCountry: "US",
   },
   knowsLanguage: ["en"],

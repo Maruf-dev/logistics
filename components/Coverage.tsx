@@ -2,16 +2,28 @@
 
 import { t } from "@/lib/i18n";
 
-// Katy, TX dispatch hub + the five destination nodes (viewBox 460 x 300).
-// `lx`/`ly` are the manually-tuned label anchors kept from the original layout.
+// Chicago, IL dispatch hub + its destination nodes (viewBox 460 x 300).
+// `lx`/`ly` are manually-tuned label anchors; `anchor` keeps edge labels on-card.
 const HUB = { x: 150, y: 210 };
 const DESTS = [
-  { key: "chicago", x: 300, y: 90, lx: 312, ly: 86 },
-  { key: "denver", x: 120, y: 110, lx: 78, ly: 106 },
-  { key: "atlanta", x: 340, y: 200, lx: 352, ly: 204 },
-  { key: "la", x: 60, y: 150, lx: 6, ly: 146 },
-  { key: "miami", x: 250, y: 250, lx: 262, ly: 264 },
+  { key: "chicago", x: 300, y: 90, lx: 312, ly: 86, anchor: "start" },
+  { key: "denver", x: 120, y: 110, lx: 78, ly: 106, anchor: "start" },
+  { key: "atlanta", x: 340, y: 200, lx: 352, ly: 204, anchor: "start" },
+  { key: "la", x: 60, y: 150, lx: 6, ly: 146, anchor: "start" },
+  { key: "miami", x: 250, y: 250, lx: 262, ly: 264, anchor: "start" },
+  { key: "newyork", x: 405, y: 132, lx: 393, ly: 128, anchor: "end" },
+  { key: "dallas", x: 188, y: 272, lx: 188, ly: 290, anchor: "middle" },
+  { key: "seattle", x: 72, y: 56, lx: 84, ly: 52, anchor: "start" },
 ] as const;
+
+const POS = Object.fromEntries(DESTS.map((d) => [d.key, d])) as Record<string, (typeof DESTS)[number]>;
+
+// Secondary city-to-city corridors (no hub) — render fainter, no shipment dots.
+const CONNECTORS: [string, string][] = [
+  ["seattle", "la"], // west coast
+  ["newyork", "atlanta"], // east coast
+  ["atlanta", "miami"], // southeast → Florida
+];
 
 export default function Coverage() {
   const c = t.coverage;
@@ -25,7 +37,7 @@ export default function Coverage() {
       label: c.map[d.key],
       path: `M${HUB.x} ${HUB.y}L${d.x} ${d.y}`,
       dur: Math.max(1.6, len / 52).toFixed(2),
-      begin: (-(i * 0.7)).toFixed(2),
+      begin: (-(i * 0.6)).toFixed(2),
     };
   });
 
@@ -52,6 +64,11 @@ export default function Coverage() {
           </div>
           <div className="map-wrap reveal">
             <svg viewBox="0 0 460 300" aria-label={t.a11y.coverageMap}>
+              {/* secondary city-to-city corridors (drawn under the hub lanes) */}
+              {CONNECTORS.map(([a, b]) => (
+                <path key={`${a}-${b}`} className="mp-conn" d={`M${POS[a].x} ${POS[a].y}L${POS[b].x} ${POS[b].y}`} />
+              ))}
+
               {/* route lines from the hub — dashes flow slowly outward */}
               {lanes.map((l) => (
                 <path key={l.key} className="mp-line" d={l.path} />
@@ -82,7 +99,7 @@ export default function Coverage() {
 
               {/* labels */}
               {lanes.map((l) => (
-                <text key={l.key} className="node-label" x={l.lx} y={l.ly}>
+                <text key={l.key} className="node-label" x={l.lx} y={l.ly} textAnchor={l.anchor}>
                   {l.label}
                 </text>
               ))}
