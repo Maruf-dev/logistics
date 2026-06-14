@@ -9,7 +9,7 @@ import { t } from "@/lib/i18n";
    HUB_COUNT entries are labelled city hubs; the rest fill a faint mesh.
    Edges are derived deterministically (so SSR + client match) by
    connecting any two nodes closer than EDGE_MAX. A few lanes fan out
-   from the Houston dispatch hub — the single, restrained motif (a slow
+   from the Chicago dispatch hub — the single, restrained motif (a slow
    dashed flow, CSS-only, disabled under prefers-reduced-motion).
 ------------------------------------------------------------------- */
 type MapNode = { x: number; y: number; hub?: string; main?: boolean };
@@ -17,8 +17,8 @@ type MapNode = { x: number; y: number; hub?: string; main?: boolean };
 const NODES: MapNode[] = [
   { x: 78, y: 84, hub: "Seattle" }, // 0
   { x: 120, y: 300, hub: "Los Angeles" }, // 1
-  { x: 500, y: 372, hub: "Houston", main: true }, // 2 — dispatch hub
-  { x: 668, y: 168, hub: "Chicago" }, // 3
+  { x: 500, y: 372, hub: "Houston" }, // 2
+  { x: 668, y: 168, hub: "Chicago, IL", main: true }, // 3 — dispatch hub
   { x: 762, y: 312, hub: "Atlanta" }, // 4
   { x: 902, y: 150, hub: "New York" }, // 5
   { x: 815, y: 432, hub: "Miami" }, // 6
@@ -33,8 +33,8 @@ const NODES: MapNode[] = [
 const HUB_COUNT = 7;
 const EDGE_MAX = 156; // nodes closer than this get a faint mesh line
 
-// Lanes fanning out from the Houston hub (index pairs into NODES).
-const ROUTES: [number, number][] = [[2, 3], [2, 4], [2, 1], [2, 5], [2, 0], [2, 6]];
+// Lanes fanning out from the Chicago dispatch hub (index pairs into NODES).
+const ROUTES: [number, number][] = [[3, 2], [3, 4], [3, 1], [3, 5], [3, 0], [3, 6]];
 
 // Deterministic mesh edges, computed once at module load.
 const EDGES: [number, number][] = (() => {
@@ -51,7 +51,7 @@ const EDGES: [number, number][] = (() => {
 // One truck rolls along each lane. Directions alternate (hub↔city) and the
 // timings are derived deterministically from the index — no randomness — so
 // SSR and client agree and the fleet stays spread out along the lanes instead
-// of pulsing from Houston in unison. Constant cruising speed, slow and quiet.
+// of pulsing from Chicago in unison. Constant cruising speed, slow and quiet.
 const TRUCKS = ROUTES.map(([from, to], i) => {
   const a = NODES[from];
   const b = NODES[to];
