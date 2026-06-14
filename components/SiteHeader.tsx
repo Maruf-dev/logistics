@@ -63,7 +63,7 @@ export default function SiteHeader() {
             ))}
           </nav>
           <div className="nav-right">
-            <Link href="#quote" className="btn btn-accent">
+            <Link href="#apply" className="btn btn-accent">
               {t.nav.quote}
             </Link>
             <button
@@ -111,7 +111,7 @@ export default function SiteHeader() {
           </Link>
         ))}
         <Link
-          href="#quote"
+          href="#apply"
           className="btn btn-accent"
           style={{ fontSize: 16, justifyContent: "center" }}
           onClick={() => setDrawerOpen(false)}

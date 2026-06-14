@@ -6,7 +6,7 @@ import Coverage from "@/components/Coverage";
 import Process from "@/components/Process";
 import Equipment from "@/components/Equipment";
 import Why from "@/components/Why";
-import QuoteForm from "@/components/QuoteForm";
+import Apply from "@/components/Apply";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 
@@ -23,7 +23,7 @@ export default function Home() {
         <Process />
         <Equipment />
         <Why />
-        <QuoteForm />
+        <Apply />
       </main>
       <Footer />
       <ScrollReveal />
