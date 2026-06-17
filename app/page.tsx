@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
 import Services from "@/components/Services";
 import Coverage from "@/components/Coverage";
-import Process from "@/components/Process";
+import Partners from "@/components/Partners";
 import Equipment from "@/components/Equipment";
 import Why from "@/components/Why";
 import Apply from "@/components/Apply";
@@ -20,7 +20,7 @@ export default function Home() {
         <Stats />
         <Services />
         <Coverage />
-        <Process />
+        <Partners />
         <Equipment />
         <Why />
         <Apply />

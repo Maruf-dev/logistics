@@ -176,8 +176,13 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
                 <select id="ap-cdl" name="cdl" value={values.cdl} onChange={update("cdl")}>
                   <option value="">{f.cdlPlaceholder}</option>
                   <option value="a">{f.cdlOptions.a}</option>
-                  <option value="b">{f.cdlOptions.b}</option>
-                  <option value="c">{f.cdlOptions.c}</option>
+                  {/* Company drivers run our Class A equipment only; owner-operators may bring B/C. */}
+                  {role !== "company" && (
+                    <>
+                      <option value="b">{f.cdlOptions.b}</option>
+                      <option value="c">{f.cdlOptions.c}</option>
+                    </>
+                  )}
                 </select>
               </div>
               <div className="field">

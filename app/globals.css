@@ -331,14 +331,25 @@ main:focus{outline:none}
 @keyframes covHub{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
 .map-wrap .mp-hub-ring{fill:none;stroke:var(--accent);stroke-width:1.4;opacity:.4}
 
-/* ============================================================ PROCESS */
-.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.step{padding:26px 30px 8px 0;border-top:2px solid var(--border);position:relative}
-.step .n{font-family:var(--font-mono);font-size:30px;font-weight:600;color:var(--accent-d);
-  letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums}
-.step h3{font-size:19px;margin:16px 0 8px;line-height:1.16;letter-spacing:-0.005em}
-.step p{color:var(--muted);font-size:14.5px;max-width:26ch;text-wrap:pretty}
-.step::after{content:"";position:absolute;top:-2px;left:0;width:42px;height:2px;background:var(--accent)}
+/* ============================================================ PARTNERS */
+.partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.partner{
+  position:relative;display:grid;place-items:center;min-height:128px;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:28px 30px;
+  transition:border-color var(--dur-2) var(--ease-std), box-shadow var(--dur-2) var(--ease-std);
+}
+.partner:hover{border-color:color-mix(in oklab,var(--fg) 18%,var(--border));box-shadow:var(--shadow-md)}
+.partner img{
+  max-height:56px;width:auto;max-width:100%;object-fit:contain;
+  filter:grayscale(1);opacity:.6;
+  transition:filter var(--dur-3) var(--ease-std), opacity var(--dur-3) var(--ease-std);
+}
+.partner:hover img{filter:none;opacity:1}
+/* shown only when the logo PNG is missing (see Partners onError) */
+.p-name{display:none;font-family:var(--font-display);font-weight:800;font-size:20px;
+  letter-spacing:-0.01em;color:var(--muted);transition:color var(--dur-2) var(--ease-std)}
+.partner:hover .p-name{color:var(--fg)}
 
 /* ============================================================ EQUIPMENT */
 .equip{background:var(--surface);border-top:1px solid var(--border)}
@@ -512,16 +523,9 @@ main:focus{outline:none}
 .q-success p{color:var(--muted);margin-top:10px;font-size:15px}
 
 /* ============================================================ FOOTER */
-.footer{background:var(--ink);color:var(--on-ink-mut);padding:72px 0 34px;border-top:1px solid var(--ink-line)}
-.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
-.foot-brand .brand{margin-bottom:18px}
-.foot-brand p{font-size:14px;max-width:34ch;line-height:1.6}
-.foot-col h4{font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#fff;margin-bottom:16px;font-weight:600}
-.foot-col a,.foot-col p{display:block;font-size:14px;color:var(--on-ink-mut);padding:5px 0;transition:color var(--dur-1) var(--ease-std);overflow-wrap:anywhere}
-.foot-col a:hover{color:#fff}
-.foot-col p a{display:inline;padding:0}
+.footer{background:var(--ink);color:var(--on-ink-mut);padding:30px 0;border-top:1px solid var(--ink-line)}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
-  margin-top:48px;padding-top:24px;border-top:1px solid var(--ink-line);font-family:var(--font-mono);font-size:12px;letter-spacing:0.03em}
+  font-family:var(--font-mono);font-size:12px;letter-spacing:0.03em}
 
 /* ============================================================ REVEAL */
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease, transform .55s var(--ease-out);transition-delay:min(calc(var(--i,0) * 55ms), 280ms)}
@@ -534,7 +538,6 @@ main:focus{outline:none}
   .cov-grid,.eq-grid{grid-template-columns:1fr;gap:40px}
   .apply-cards{grid-template-columns:1fr;max-width:480px}
   .svc-grid{grid-template-columns:repeat(2,1fr)}
-  .proc-grid{grid-template-columns:repeat(2,1fr)}
   .why-grid{grid-template-columns:1fr}
   /* stats reflow with the rest of the layout at the same breakpoint */
   .stats .wrap{grid-template-columns:repeat(2,1fr)}
@@ -550,19 +553,17 @@ main:focus{outline:none}
 @media(max-width:820px){
   .nav-links,.nav-right .btn{display:none}
   .menu-btn{display:grid;place-items:center}
-  .foot-grid{grid-template-columns:1fr 1fr}
-  .foot-brand{grid-column:1/-1}
 }
 @media(max-width:560px){
   .section{padding:72px 0}
   .hero{padding:120px 0 66px}
   .hero h1 em{white-space:normal}
-  .svc-grid,.proc-grid{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr}
+  .partner-grid{grid-template-columns:repeat(2,1fr)}
   .field.two{grid-template-columns:1fr;gap:0}
   /* map labels shrink with the column on small screens — hide for clarity */
   .hub-label,.hub-tag{display:none}
   .hero-cta .btn{flex:1;justify-content:center}
-  .foot-grid{grid-template-columns:1fr}
   .foot-bottom{justify-content:flex-start}
   .modal{padding:24px}
   .apply-contact{flex-direction:column;align-items:flex-start;gap:16px}
@@ -570,7 +571,6 @@ main:focus{outline:none}
 /* touch devices: meet the ~44px target minimum without affecting precision pointers */
 @media (pointer:coarse){
   .menu-btn{width:44px;height:44px}
-  .foot-col a{padding:9px 0}
 }
 
 /* mobile drawer */

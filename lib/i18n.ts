@@ -7,7 +7,7 @@ export const t = {
   nav: {
     services: "Services",
     coverage: "Coverage",
-    process: "How it works",
+    partners: "Partners",
     fleet: "Fleet",
     contact: "Contact",
     quote: "Apply now",
@@ -52,8 +52,8 @@ export const t = {
       },
       {
         tag: "Best rates",
-        title: "Rates that pay",
-        desc: "We negotiate hard with brokers on your behalf, so you stop hauling cheap freight and earn your miles.",
+        title: "Rates that pay — $3–$3+/mi",
+        desc: "We negotiate hard with brokers on your behalf and keep you on freight that averages $3–$3+ per mile, so you stop hauling cheap loads and earn real money on every run.",
         icon: "dollar",
       },
       {
@@ -93,11 +93,10 @@ export const t = {
     title: "Based in Chicago. Lanes across the country.",
     lead: "Our Chicago, Illinois hub and active interstate authority keep freight moving along the major corridors of the Midwest, Northeast, and Southeast. Estimated transit times on key lanes:",
     lanes: [
-      { from: "Chicago", to: "Detroit", time: "~4–5 h · 280 mi" },
+      { from: "Ohio", to: "Florida", time: "~15–17 h · 915 mi" },
+      { from: "Los Angeles", to: "Georgia", time: "~33–36 h · 2,175 mi" },
       { from: "Chicago", to: "Atlanta", time: "~11–13 h · 715 mi" },
-      { from: "Chicago", to: "New York", time: "~12–14 h · 790 mi" },
-      { from: "Chicago", to: "Denver", time: "~16–18 h · 1,000 mi" },
-      { from: "Chicago", to: "Los Angeles", time: "~31–34 h · 2,015 mi" },
+      { from: "Georgia", to: "Pennsylvania", time: "~12–14 h · 760 mi" },
     ],
     map: {
       chicago: "Detroit",
@@ -111,14 +110,17 @@ export const t = {
       hub: "Chicago, IL",
     },
   },
-  process: {
-    kicker: "How we work",
-    title: "Four steps from request to delivery",
-    steps: [
-      { n: "01", title: "Request", desc: "Send us the lane, freight type, and weight — via the form or your dispatcher." },
-      { n: "02", title: "Quote in ≤2 h", desc: "We return a transparent price and an available pickup window during business hours." },
-      { n: "03", title: "Pickup & loading", desc: "The truck arrives on time. We oversee loading and securing the freight." },
-      { n: "04", title: "Delivery & POD", desc: "In-transit tracking, on-window unloading, and electronic closing documents." },
+  partners: {
+    kicker: "Our partners",
+    title: "Who we move freight with",
+    lead: "We run loads for established brokers and shippers across the country — the partners that keep our trucks rolling and our rates fair.",
+    items: [
+      { name: "SPOT", logo: "/partners/spot.jpg" },
+      { name: "U.S. Xpress", logo: "/partners/usx.png" },
+      { name: "J.B. Hunt", logo: "/partners/jb-hunt.png" },
+      { name: "Echo Global Logistics", logo: "/partners/echo.jpg" },
+      { name: "TQL", logo: "/partners/tql.jpg" },
+      { name: "AC", logo: "/partners/ac.jpg" },
     ],
   },
   equipment: {
@@ -174,7 +176,7 @@ export const t = {
       locationLabel: "Location",
       location: "Chicago, Illinois, USA",
       emailLabel: "Recruiting e-mail",
-      email: "dispatch@harbtrucking.com",
+      email: "topcdltrucking@gmail.com",
       authorityLabel: "Authority",
       authority: "USDOT #4327636 · MC #1689299",
     },
@@ -215,18 +217,6 @@ export const t = {
     },
   },
   footer: {
-    blurb: "Licensed dry-van carrier for B2B shippers and distributors. Chicago, Illinois.",
-    servicesTitle: "Services",
-    services: ["FTL — full truckload", "LTL — partial loads", "Expedited runs", "Cross-docking"],
-    companyTitle: "Company",
-    company: [
-      { href: "#coverage", label: "Coverage" },
-      { href: "#process", label: "How we work" },
-      { href: "#equipment", label: "Fleet" },
-      { href: "#apply", label: "Apply now" },
-    ],
-    contactTitle: "Contact",
-    contact: ["Chicago, Illinois, USA", "dispatch@harbtrucking.com", "Dispatch: 24/7", "USDOT #4327636 · MC #1689299"],
     copyright: "© 2026 Harb Trucking. All rights reserved.",
     tagline: "Made for B2B freight · Dry Van · 48 States",
   },

@@ -3,17 +3,20 @@
 import { t } from "@/lib/i18n";
 
 // Chicago, IL dispatch hub + its destination nodes (viewBox 460 x 300).
-// `lx`/`ly` are manually-tuned label anchors; `anchor` keeps edge labels on-card.
-const HUB = { x: 150, y: 210 };
+// Coordinates are a real equirectangular projection of each city's lat/long
+// (continental-US aspect preserved), so the layout matches actual U.S. geography
+// rather than a decorative fan. `lx`/`ly` are label anchors; `anchor` keeps
+// edge labels on-card.
+const HUB = { x: 308, y: 101 }; // Chicago, IL — 41.9°N, 87.6°W
 const DESTS = [
-  { key: "chicago", x: 300, y: 90, lx: 312, ly: 86, anchor: "start" },
-  { key: "denver", x: 120, y: 110, lx: 78, ly: 106, anchor: "start" },
-  { key: "atlanta", x: 340, y: 200, lx: 352, ly: 204, anchor: "start" },
-  { key: "la", x: 60, y: 150, lx: 6, ly: 146, anchor: "start" },
-  { key: "miami", x: 250, y: 250, lx: 262, ly: 264, anchor: "start" },
-  { key: "newyork", x: 405, y: 132, lx: 393, ly: 128, anchor: "end" },
-  { key: "dallas", x: 188, y: 272, lx: 188, ly: 290, anchor: "middle" },
-  { key: "seattle", x: 72, y: 56, lx: 84, ly: 52, anchor: "start" },
+  { key: "chicago", x: 342, y: 97, lx: 342, ly: 83, anchor: "middle" }, // Detroit — 42.3°N, 83.0°W
+  { key: "denver", x: 175, y: 122, lx: 163, ly: 126, anchor: "end" }, //   39.7°N, 105.0°W
+  { key: "atlanta", x: 333, y: 180, lx: 345, ly: 184, anchor: "start" }, // 33.7°N, 84.4°W
+  { key: "la", x: 74, y: 177, lx: 62, ly: 181, anchor: "end" }, //         34.0°N, 118.2°W
+  { key: "miami", x: 365, y: 257, lx: 377, ly: 261, anchor: "start" }, //  25.8°N, 80.2°W
+  { key: "newyork", x: 412, y: 113, lx: 400, ly: 118, anchor: "end" }, //  40.7°N, 74.0°W
+  { key: "dallas", x: 237, y: 190, lx: 237, ly: 210, anchor: "middle" }, // 32.8°N, 96.8°W
+  { key: "seattle", x: 42, y: 46, lx: 54, ly: 42, anchor: "start" }, //    47.6°N, 122.3°W
 ] as const;
 
 const POS = Object.fromEntries(DESTS.map((d) => [d.key, d])) as Record<string, (typeof DESTS)[number]>;
@@ -107,7 +110,7 @@ export default function Coverage() {
               {/* hub */}
               <circle className="mp-hub-ring" cx={HUB.x} cy={HUB.y} r="6" />
               <circle className="mp-hub" cx={HUB.x} cy={HUB.y} r="6.5" />
-              <text x="92" y="232" fill="#fff" style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 14 }}>
+              <text x="296" y="120" textAnchor="end" fill="#fff" style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 14 }}>
                 {c.map.hub}
               </text>
             </svg>

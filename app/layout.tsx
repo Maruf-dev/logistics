@@ -82,7 +82,7 @@ const jsonLd = {
   "@type": "MovingCompany",
   name: "Harb Trucking",
   url: "https://harbtrucking.com",
-  email: "dispatch@harbtrucking.com",
+  email: "topcdltrucking@gmail.com",
   image: "https://harbtrucking.com/og.svg",
   description:
     "Licensed dry-van carrier for B2B shippers and distributors. Direct rates, live dispatch, and tracking from pickup to delivery across all 48 states.",

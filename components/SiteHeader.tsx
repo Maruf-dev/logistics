@@ -20,7 +20,7 @@ export default function SiteHeader() {
   const navLinks = [
     { href: "#services", label: t.nav.services },
     { href: "#coverage", label: t.nav.coverage },
-    { href: "#process", label: t.nav.process },
+    { href: "#partners", label: t.nav.partners },
     { href: "#equipment", label: t.nav.fleet },
     { href: "#contact", label: t.nav.contact },
   ];

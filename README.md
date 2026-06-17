@@ -37,7 +37,7 @@ app/
   globals.css       Design tokens + all component styles (ported from the export)
 components/
   SiteHeader        Fixed header, scroll state, mobile drawer
-  Hero  Stats  Services  Coverage  Process  Equipment  Why  QuoteForm  Footer
+  Hero  Stats  Services  Coverage  Partners  Equipment  Why  Apply
   Brand             Logo + wordmark
   ScrollReveal      Single IntersectionObserver driving all `.reveal` elements
 lib/
