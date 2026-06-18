@@ -181,7 +181,7 @@ export const t = {
       authority: "USDOT #4327636 · MC #1689299",
     },
     form: {
-      sub: "Tell us a bit about you — a recruiter will reach out within one business day.",
+      sub: "Tell us a bit about you — a recruiter will reach out ASAP.",
       name: "Full name *",
       namePh: "First and last name",
       nameErr: "Enter your name",
@@ -212,7 +212,7 @@ export const t = {
       note: "By submitting, you agree a recruiter may contact you using the details provided.",
       success: {
         heading: "Application received",
-        body: "Thanks — a recruiter will reach out within one business day.",
+        body: "Thanks — a recruiter will reach out ASAP.",
         again: "Close",
       },
     },
