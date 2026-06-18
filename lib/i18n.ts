@@ -202,8 +202,6 @@ export const t = {
       experiencePh: "e.g. 3",
       equipment: "Truck / trailer type",
       equipmentPh: "e.g. 2021 Freightliner · 53′ dry van",
-      authority: "Own authority (MC / DOT)",
-      authorityPh: "MC or DOT #, if any",
       endorsements: "Endorsements",
       endorsementsPh: "e.g. Hazmat, Tanker",
       available: "Available from",

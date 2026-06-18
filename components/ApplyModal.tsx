@@ -21,7 +21,6 @@ type Values = {
   cdl: string;
   experience: string;
   equipment: string; // owner operator
-  authority: string; // owner operator
   endorsements: string; // company driver
   available: string; // company driver
   botcheck: string; // honeypot — must stay empty
@@ -29,7 +28,7 @@ type Values = {
 
 const EMPTY: Values = {
   name: "", phone: "", email: "", cdl: "", experience: "",
-  equipment: "", authority: "", endorsements: "", available: "",
+  equipment: "", endorsements: "", available: "",
   botcheck: "",
 };
 
@@ -158,6 +157,11 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
 
     // No key configured → fail loud rather than show a fake success.
     if (!ACCESS_KEY) {
+      console.error(
+        "[Apply] NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY is missing from this build. " +
+          "Env vars are inlined at compile time — fully restart `npm run dev` after editing .env.local, " +
+          "or set the variable in your host's environment.",
+      );
       setStatus("error");
       return;
     }
@@ -175,13 +179,12 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
       "Full name": values.name.trim(),
       Phone: values.phone.trim(),
       Email: values.email.trim(),
-      "CDL class": cdlLabel,
       "Years of experience": values.experience.trim() || "Not specified",
     };
     if (role === "owner") {
       payload["Truck / trailer type"] = values.equipment.trim() || "Not specified";
-      payload["Own authority (MC / DOT)"] = values.authority.trim() || "Not specified";
     } else {
+      payload["CDL class"] = cdlLabel;
       payload["Endorsements"] = values.endorsements.trim() || "Not specified";
       payload["Available from"] = values.available || "Not specified";
     }
@@ -195,10 +198,16 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
         body: JSON.stringify(payload),
       });
       if (reqRef.current !== myReq) return; // modal closed/reopened mid-flight
-      const data = (await res.json()) as { success?: boolean };
-      setStatus(res.ok && data.success ? "success" : "error");
-    } catch {
+      const data = (await res.json().catch(() => null)) as { success?: boolean; message?: string } | null;
+      if (res.ok && data?.success) {
+        setStatus("success");
+      } else {
+        console.error("[Apply] Web3Forms rejected the submission", { status: res.status, body: data });
+        setStatus("error");
+      }
+    } catch (err) {
       if (reqRef.current !== myReq) return;
+      console.error("[Apply] Submission request failed (network / CORS / blocked)", err);
       setStatus("error");
     }
   };
@@ -261,21 +270,8 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
               </div>
             </div>
 
-            <div className="field two">
-              <div className="field">
-                <label htmlFor="ap-cdl">{f.cdl}</label>
-                <select id="ap-cdl" name="cdl" value={values.cdl} onChange={update("cdl")}>
-                  <option value="">{f.cdlPlaceholder}</option>
-                  <option value="a">{f.cdlOptions.a}</option>
-                  {/* Company drivers run our Class A equipment only; owner-operators may bring B/C. */}
-                  {role !== "company" && (
-                    <>
-                      <option value="b">{f.cdlOptions.b}</option>
-                      <option value="c">{f.cdlOptions.c}</option>
-                    </>
-                  )}
-                </select>
-              </div>
+            {/* CDL class is only asked of company drivers; owner-operators skip it. */}
+            {role === "owner" ? (
               <div className="field">
                 <label htmlFor="ap-exp">{f.experience}</label>
                 <input
@@ -283,24 +279,33 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
                   value={values.experience} onChange={update("experience")}
                 />
               </div>
-            </div>
-
-            {role === "owner" ? (
+            ) : (
               <div className="field two">
                 <div className="field">
-                  <label htmlFor="ap-equip">{f.equipment}</label>
-                  <input
-                    id="ap-equip" name="equipment" type="text" placeholder={f.equipmentPh}
-                    value={values.equipment} onChange={update("equipment")}
-                  />
+                  <label htmlFor="ap-cdl">{f.cdl}</label>
+                  <select id="ap-cdl" name="cdl" value={values.cdl} onChange={update("cdl")}>
+                    <option value="">{f.cdlPlaceholder}</option>
+                    {/* Company drivers run our Class A equipment only. */}
+                    <option value="a">{f.cdlOptions.a}</option>
+                  </select>
                 </div>
                 <div className="field">
-                  <label htmlFor="ap-auth">{f.authority}</label>
+                  <label htmlFor="ap-exp">{f.experience}</label>
                   <input
-                    id="ap-auth" name="authority" type="text" placeholder={f.authorityPh}
-                    value={values.authority} onChange={update("authority")}
+                    id="ap-exp" name="experience" type="number" min="0" inputMode="numeric" placeholder={f.experiencePh}
+                    value={values.experience} onChange={update("experience")}
                   />
                 </div>
+              </div>
+            )}
+
+            {role === "owner" ? (
+              <div className="field">
+                <label htmlFor="ap-equip">{f.equipment}</label>
+                <input
+                  id="ap-equip" name="equipment" type="text" placeholder={f.equipmentPh}
+                  value={values.equipment} onChange={update("equipment")}
+                />
               </div>
             ) : (
               <div className="field two">
