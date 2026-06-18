@@ -52,7 +52,7 @@ export const t = {
       },
       {
         tag: "Best rates",
-        title: "Rates that pay — $3–$3+/mi",
+        title: "Rates that pay — $3–$3+",
         desc: "We negotiate hard with brokers on your behalf and keep you on freight that averages $3–$3+ per mile, so you stop hauling cheap loads and earn real money on every run.",
         icon: "dollar",
       },
@@ -208,6 +208,9 @@ export const t = {
       endorsementsPh: "e.g. Hazmat, Tanker",
       available: "Available from",
       submit: "Submit application",
+      sending: "Sending…",
+      error:
+        "We couldn't send your application. Please try again, or email us directly at topcdltrucking@gmail.com.",
       note: "By submitting, you agree a recruiter may contact you using the details provided.",
       success: {
         heading: "Application received",

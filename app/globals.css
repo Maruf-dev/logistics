@@ -512,6 +512,12 @@ main:focus{outline:none}
 .field .msg{font-size:12px;color:oklch(55% 0.2 25);margin-top:5px;display:none}
 .field.err .msg{display:block}
 .q-note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
+/* inline send-failure banner + in-flight button + honeypot */
+.modal-error{margin-top:18px;padding:11px 14px;border-radius:var(--r);font-size:13.5px;line-height:1.45;
+  color:oklch(48% 0.16 25);background:color-mix(in oklab,oklch(60% 0.2 25) 12%,transparent);
+  border:1px solid color-mix(in oklab,oklch(60% 0.2 25) 40%,transparent)}
+.modal-form .btn-accent:disabled{opacity:.65;cursor:progress}
+.hp{display:none}
 .q-success{display:none;text-align:center;padding:18px 0}
 .q-success.show{display:block;animation:successIn .35s var(--ease-out) both}
 .q-success:focus{outline:none}

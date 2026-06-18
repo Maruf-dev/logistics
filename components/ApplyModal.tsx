@@ -9,6 +9,11 @@ export type Role = "owner" | "company";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /\d[\d\s().+-]{6,}/; // at least 7 digits' worth of phone
 
+// Web3Forms delivers submissions to the recruiting inbox. The access key is
+// public-safe by design; it lives in NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY.
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
 type Values = {
   name: string;
   phone: string;
@@ -19,12 +24,16 @@ type Values = {
   authority: string; // owner operator
   endorsements: string; // company driver
   available: string; // company driver
+  botcheck: string; // honeypot — must stay empty
 };
 
 const EMPTY: Values = {
   name: "", phone: "", email: "", cdl: "", experience: "",
   equipment: "", authority: "", endorsements: "", available: "",
+  botcheck: "",
 };
+
+type Status = "idle" | "sending" | "success" | "error";
 
 type Errors = { name?: boolean; phone?: boolean; email?: boolean };
 
@@ -41,19 +50,33 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
 
   const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
+  const reqRef = useRef(0); // submission generation — invalidates stale responses
 
   // Fresh form each time a card opens the modal.
   useEffect(() => {
     if (open) {
       setValues(EMPTY);
       setErrors({});
-      setSubmitted(false);
+      setStatus("idle");
     }
   }, [role, open]);
+
+  // On close, bump the generation so a late response can't flip a since-closed
+  // or reopened form to success/error.
+  useEffect(() => {
+    if (!open) reqRef.current += 1;
+  }, [open]);
+
+  // Move focus into the confirmation panel when a submission succeeds, so
+  // keyboard focus isn't orphaned when the form unmounts.
+  useEffect(() => {
+    if (status === "success") successRef.current?.focus();
+  }, [status]);
 
   // Scroll lock + focus management + Tab trap + Escape — only while open.
   useEffect(() => {
@@ -61,8 +84,15 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
     const opener = document.activeElement as HTMLElement | null;
     document.body.style.overflow = "hidden";
 
-    const first = dialogRef.current?.querySelector<HTMLElement>("input, select, textarea, button");
-    (first ?? closeRef.current)?.focus();
+    // Visible focusables only — excludes the hidden honeypot (offsetParent === null).
+    const focusable = () =>
+      Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      ).filter((el) => el.offsetParent !== null);
+
+    (focusable()[0] ?? closeRef.current)?.focus();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -71,10 +101,8 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
         return;
       }
       if (e.key !== "Tab") return;
-      const items = dialogRef.current?.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
-      if (!items || items.length === 0) return;
+      const items = focusable();
+      if (items.length === 0) return;
       const firstEl = items[0];
       const lastEl = items[items.length - 1];
       if (e.shiftKey && document.activeElement === firstEl) {
@@ -106,16 +134,73 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
       }
     };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const cdlLabel =
+    values.cdl === "a" ? f.cdlOptions.a
+    : values.cdl === "b" ? f.cdlOptions.b
+    : values.cdl === "c" ? f.cdlOptions.c
+    : "Not specified";
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (status === "sending") return; // guard against re-entrant submits
     const next: Errors = {
       name: !values.name.trim(),
       phone: !PHONE_RE.test(values.phone.trim()),
       email: !EMAIL_RE.test(values.email.trim()),
     };
     setErrors(next);
-    if (next.name || next.phone || next.email) return;
-    setSubmitted(true);
+    if (next.name || next.phone || next.email) {
+      // Send focus to the first invalid field so keyboard / screen-reader users
+      // are taken straight to the problem.
+      document.getElementById(next.name ? "ap-name" : next.phone ? "ap-phone" : "ap-email")?.focus();
+      return;
+    }
+
+    // No key configured → fail loud rather than show a fake success.
+    if (!ACCESS_KEY) {
+      setStatus("error");
+      return;
+    }
+
+    const appType = role === "owner" ? "Owner Operator" : "Company Driver";
+
+    // Readable keys become the labels in the e-mail Web3Forms sends.
+    const payload: Record<string, string> = {
+      access_key: ACCESS_KEY,
+      subject: `New ${appType} application — Harb Trucking`,
+      from_name: "Harb Trucking website",
+      replyto: values.email.trim(),
+      botcheck: values.botcheck,
+      "Application type": appType,
+      "Full name": values.name.trim(),
+      Phone: values.phone.trim(),
+      Email: values.email.trim(),
+      "CDL class": cdlLabel,
+      "Years of experience": values.experience.trim() || "Not specified",
+    };
+    if (role === "owner") {
+      payload["Truck / trailer type"] = values.equipment.trim() || "Not specified";
+      payload["Own authority (MC / DOT)"] = values.authority.trim() || "Not specified";
+    } else {
+      payload["Endorsements"] = values.endorsements.trim() || "Not specified";
+      payload["Available from"] = values.available || "Not specified";
+    }
+
+    const myReq = reqRef.current;
+    setStatus("sending");
+    try {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (reqRef.current !== myReq) return; // modal closed/reopened mid-flight
+      const data = (await res.json()) as { success?: boolean };
+      setStatus(res.ok && data.success ? "success" : "error");
+    } catch {
+      if (reqRef.current !== myReq) return;
+      setStatus("error");
+    }
   };
 
   return createPortal(
@@ -135,9 +220,15 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
           </button>
         </div>
 
-        {!submitted ? (
+        {status !== "success" ? (
           <form className="modal-form" onSubmit={handleSubmit} noValidate>
             <p className="sub">{f.sub}</p>
+
+            {/* Honeypot — hidden from people; bots that fill it are rejected by Web3Forms. */}
+            <input
+              type="text" name="botcheck" className="hp" tabIndex={-1} autoComplete="off" aria-hidden="true"
+              value={values.botcheck} onChange={update("botcheck")}
+            />
 
             <div className={`field${errors.name ? " err" : ""}`}>
               <label htmlFor="ap-name">{f.name}</label>
@@ -146,7 +237,7 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
                 value={values.name} onChange={update("name")}
                 aria-invalid={errors.name ?? false} aria-describedby={errors.name ? "ap-name-err" : undefined}
               />
-              <span className="msg" id="ap-name-err" role="alert">{f.nameErr}</span>
+              {errors.name && <span className="msg" id="ap-name-err" role="alert">{f.nameErr}</span>}
             </div>
 
             <div className="field two">
@@ -157,7 +248,7 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
                   value={values.phone} onChange={update("phone")}
                   aria-invalid={errors.phone ?? false} aria-describedby={errors.phone ? "ap-phone-err" : undefined}
                 />
-                <span className="msg" id="ap-phone-err" role="alert">{f.phoneErr}</span>
+                {errors.phone && <span className="msg" id="ap-phone-err" role="alert">{f.phoneErr}</span>}
               </div>
               <div className={`field${errors.email ? " err" : ""}`}>
                 <label htmlFor="ap-email">{f.email}</label>
@@ -166,7 +257,7 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
                   value={values.email} onChange={update("email")}
                   aria-invalid={errors.email ?? false} aria-describedby={errors.email ? "ap-email-err" : undefined}
                 />
-                <span className="msg" id="ap-email-err" role="alert">{f.emailErr}</span>
+                {errors.email && <span className="msg" id="ap-email-err" role="alert">{f.emailErr}</span>}
               </div>
             </div>
 
@@ -227,16 +318,22 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
               </div>
             )}
 
-            <button type="submit" className="btn btn-accent">
-              {f.submit}
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+            {status === "error" && (
+              <p className="modal-error" role="alert">{f.error}</p>
+            )}
+
+            <button type="submit" className="btn btn-accent" disabled={status === "sending"}>
+              {status === "sending" ? f.sending : f.submit}
+              {status !== "sending" && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
             </button>
             <p className="q-note">{f.note}</p>
           </form>
         ) : (
-          <div className="q-success show" role="status" aria-live="polite">
+          <div className="q-success show" role="status" aria-live="polite" ref={successRef} tabIndex={-1}>
             <div className="ck">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                 <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
