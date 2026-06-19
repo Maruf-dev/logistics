@@ -110,7 +110,7 @@ export default function Coverage() {
               {/* hub */}
               <circle className="mp-hub-ring" cx={HUB.x} cy={HUB.y} r="6" />
               <circle className="mp-hub" cx={HUB.x} cy={HUB.y} r="6.5" />
-              <text x="296" y="120" textAnchor="end" fill="#fff" style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 14 }}>
+              <text x="296" y="120" textAnchor="end" className="cov-hub-name">
                 {c.map.hub}
               </text>
             </svg>

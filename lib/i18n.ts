@@ -191,13 +191,6 @@ export const t = {
       email: "Email *",
       emailPh: "you@email.com",
       emailErr: "Enter a valid e-mail",
-      cdl: "CDL class",
-      cdlPlaceholder: "Select class",
-      cdlOptions: {
-        a: "Class A",
-        b: "Class B",
-        c: "Class C",
-      },
       experience: "Years of experience",
       experiencePh: "e.g. 3",
       equipment: "Truck / trailer type",

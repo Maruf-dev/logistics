@@ -51,7 +51,7 @@
   --dur-3:.3s;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 12px);color-scheme:light}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 12px);color-scheme:light;scrollbar-color:var(--accent) var(--bg)}
 body{
   font-family:var(--font-body);
   background:var(--bg);
@@ -63,6 +63,11 @@ body{
   -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
 }
+/* custom scrollbar — brand amber thumb (WebKit/Blink; Firefox via scrollbar-color on html) */
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:8px;border:3px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--accent-d)}
 ::selection{background:color-mix(in oklab,var(--accent) 80%, white);color:oklch(22% 0.04 60)}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -330,6 +335,7 @@ main:focus{outline:none}
   animation:covHub 2.8s ease-in-out infinite}
 @keyframes covHub{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
 .map-wrap .mp-hub-ring{fill:none;stroke:var(--accent);stroke-width:1.4;opacity:.4}
+.cov-hub-name{font-family:var(--font-display);font-weight:800;font-size:14px;fill:#fff}
 
 /* ============================================================ PARTNERS */
 .partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -567,8 +573,18 @@ main:focus{outline:none}
   .svc-grid{grid-template-columns:1fr}
   .partner-grid{grid-template-columns:repeat(2,1fr)}
   .field.two{grid-template-columns:1fr;gap:0}
-  /* map labels shrink with the column on small screens — hide for clarity */
-  .hub-label,.hub-tag{display:none}
+  /* run the lane map full-bleed (edge-to-edge) on phones so the map graphic
+     itself is large — not just a thinner frame. Drops the rounded card. */
+  .map-wrap{
+    width:100vw;
+    margin-inline:calc(50% - 50vw);
+    padding:18px 14px;
+    border-radius:0;
+    border-left:0;
+    border-right:0;
+  }
+  .map-wrap .node-label{font-size:13px}
+  .cov-hub-name{font-size:16px}
   .hero-cta .btn{flex:1;justify-content:center}
   .foot-bottom{justify-content:flex-start}
   .modal{padding:24px}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { t } from "@/lib/i18n";
 import ApplyModal, { type Role } from "./ApplyModal";
 
@@ -38,10 +38,10 @@ export default function Apply() {
         </div>
 
         <div className="apply-cards">
-          {CARDS.map(({ role, icon }) => {
+          {CARDS.map(({ role, icon }, i) => {
             const r = a.roles[role];
             return (
-              <article className="apply-card reveal" key={role}>
+              <article className="apply-card reveal" key={role} style={{ ["--i"]: i } as CSSProperties}>
                 <div className="ac-ic">{icon}</div>
                 <h3>{r.title}</h3>
                 <p>{r.desc}</p>

@@ -18,7 +18,6 @@ type Values = {
   name: string;
   phone: string;
   email: string;
-  cdl: string;
   experience: string;
   equipment: string; // owner operator
   endorsements: string; // company driver
@@ -27,7 +26,7 @@ type Values = {
 };
 
 const EMPTY: Values = {
-  name: "", phone: "", email: "", cdl: "", experience: "",
+  name: "", phone: "", email: "", experience: "",
   equipment: "", endorsements: "", available: "",
   botcheck: "",
 };
@@ -133,11 +132,9 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
       }
     };
 
-  const cdlLabel =
-    values.cdl === "a" ? f.cdlOptions.a
-    : values.cdl === "b" ? f.cdlOptions.b
-    : values.cdl === "c" ? f.cdlOptions.c
-    : "Not specified";
+  // Earliest selectable "Available from" date = today (local), so past days are disabled.
+  const now = new Date();
+  const minDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -184,7 +181,6 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
     if (role === "owner") {
       payload["Truck / trailer type"] = values.equipment.trim() || "Not specified";
     } else {
-      payload["CDL class"] = cdlLabel;
       payload["Endorsements"] = values.endorsements.trim() || "Not specified";
       payload["Available from"] = values.available || "Not specified";
     }
@@ -270,34 +266,13 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
               </div>
             </div>
 
-            {/* CDL class is only asked of company drivers; owner-operators skip it. */}
-            {role === "owner" ? (
-              <div className="field">
-                <label htmlFor="ap-exp">{f.experience}</label>
-                <input
-                  id="ap-exp" name="experience" type="number" min="0" inputMode="numeric" placeholder={f.experiencePh}
-                  value={values.experience} onChange={update("experience")}
-                />
-              </div>
-            ) : (
-              <div className="field two">
-                <div className="field">
-                  <label htmlFor="ap-cdl">{f.cdl}</label>
-                  <select id="ap-cdl" name="cdl" value={values.cdl} onChange={update("cdl")}>
-                    <option value="">{f.cdlPlaceholder}</option>
-                    {/* Company drivers run our Class A equipment only. */}
-                    <option value="a">{f.cdlOptions.a}</option>
-                  </select>
-                </div>
-                <div className="field">
-                  <label htmlFor="ap-exp">{f.experience}</label>
-                  <input
-                    id="ap-exp" name="experience" type="number" min="0" inputMode="numeric" placeholder={f.experiencePh}
-                    value={values.experience} onChange={update("experience")}
-                  />
-                </div>
-              </div>
-            )}
+            <div className="field">
+              <label htmlFor="ap-exp">{f.experience}</label>
+              <input
+                id="ap-exp" name="experience" type="number" min="0" inputMode="numeric" placeholder={f.experiencePh}
+                value={values.experience} onChange={update("experience")}
+              />
+            </div>
 
             {role === "owner" ? (
               <div className="field">
@@ -318,7 +293,7 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
                 </div>
                 <div className="field">
                   <label htmlFor="ap-avail">{f.available}</label>
-                  <input id="ap-avail" name="available" type="date" value={values.available} onChange={update("available")} />
+                  <input id="ap-avail" name="available" type="date" min={minDate} value={values.available} onChange={update("available")} />
                 </div>
               </div>
             )}

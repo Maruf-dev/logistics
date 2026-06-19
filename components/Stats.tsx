@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { t } from "@/lib/i18n";
 
 /** Display values (language-independent). Order matches `t.stats`. */
@@ -10,7 +11,7 @@ export default function Stats() {
     <section className="stats">
       <div className="wrap">
         {t.stats.map((stat, i) => (
-          <div className="stat" key={stat.label}>
+          <div className="stat reveal" key={stat.label} style={{ ["--i"]: i } as CSSProperties}>
             <div className="num">
               {stat.prefix}
               {VALUES[i]}

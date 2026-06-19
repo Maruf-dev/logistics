@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { t } from "@/lib/i18n";
 
 /** Icons stay in code; zipped with `t.why.items` by index. */
@@ -33,7 +33,7 @@ export default function Why() {
         </div>
         <div className="why-grid">
           {t.why.items.map((item, i) => (
-            <div className="why-item reveal" key={item.title}>
+            <div className="why-item reveal" key={item.title} style={{ ["--i"]: i } as CSSProperties}>
               <div className="ic">{ICONS[i]}</div>
               <div>
                 <h3>{item.title}</h3>
