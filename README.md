@@ -25,28 +25,30 @@ npm run lint       # next lint
 ## Application form e-mail (Web3Forms)
 
 The "Drive with us → Apply now" forms (Owner Operator + Company Driver) deliver
-submissions to **topcdltrucking@gmail.com** via [Web3Forms](https://web3forms.com)
-— a serverless form-to-email service, so no backend is required.
+submissions to the recruiting inbox via [Web3Forms](https://web3forms.com) — a
+serverless form-to-email service, so no backend is required.
 
-**One-time setup:**
+**Where the key lives:** the Web3Forms access key is committed directly in
+[`components/ApplyModal.tsx`](components/ApplyModal.tsx) as the `ACCESS_KEY`
+constant. There is **no `.env` file and no host env-var setup** — every build
+(local and hosted) ships with the key, so deploys just work.
 
-1. Go to <https://web3forms.com>, create an **Access Key** using
-   `topcdltrucking@gmail.com` (free; the key is mailed to that address).
-2. Open `.env.local` and replace the placeholder:
-   `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=your-access-key`
-3. Restart `npm run dev` (local) or rebuild/redeploy (production) — the key is
-   read at **build time**.
+This is safe because Web3Forms access keys are **public by design** (they are
+exposed in the browser on every submission). The destination inbox is controlled
+in the Web3Forms dashboard by the e-mail the key is tied to, **not** by anything
+in the request, so exposing the key cannot redirect mail.
+
+**To change the destination inbox:** create a new key at
+<https://web3forms.com> using the desired e-mail, then replace the `ACCESS_KEY`
+value in `components/ApplyModal.tsx` and redeploy.
 
 Notes:
 
-- The key is **public-safe**; Web3Forms keys are designed to be exposed in the
-  browser, so committing it to a host's env settings is fine. `.env.local`
-  itself is gitignored; `.env.example` documents the variable.
 - Each submission's subject and an **"Application type"** field mark it as Owner
   Operator vs. Company Driver. The applicant's e-mail is set as **reply-to**, so
   you can reply straight from the notification.
-- If the key is missing/invalid, the form shows an error instead of a false
-  "success", and never silently drops a submission.
+- On a failed send the form shows an error instead of a false "success", and
+  never silently drops a submission.
 
 ## Copy
 

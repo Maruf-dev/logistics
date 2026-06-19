@@ -10,9 +10,11 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /\d[\d\s().+-]{6,}/; // at least 7 digits' worth of phone
 
 // Web3Forms delivers submissions to the recruiting inbox. The access key is
-// public-safe by design; it lives in NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY.
+// PUBLIC-SAFE by design (it is exposed in the browser), so it's committed here
+// directly — no .env file or host env-var setup needed. To change the destination
+// inbox, create a new key at https://web3forms.com and replace this value.
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+const ACCESS_KEY = "cafa2eeb-a388-4c4f-9c80-c2bc6fdc3e54";
 
 type Values = {
   name: string;
@@ -149,17 +151,6 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
       // Send focus to the first invalid field so keyboard / screen-reader users
       // are taken straight to the problem.
       document.getElementById(next.name ? "ap-name" : next.phone ? "ap-phone" : "ap-email")?.focus();
-      return;
-    }
-
-    // No key configured → fail loud rather than show a fake success.
-    if (!ACCESS_KEY) {
-      console.error(
-        "[Apply] NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY is missing from this build. " +
-          "Env vars are inlined at compile time — fully restart `npm run dev` after editing .env.local, " +
-          "or set the variable in your host's environment.",
-      );
-      setStatus("error");
       return;
     }
 
