@@ -14,7 +14,7 @@ const PHONE_RE = /\d[\d\s().+-]{6,}/; // at least 7 digits' worth of phone
 // directly — no .env file or host env-var setup needed. To change the destination
 // inbox, create a new key at https://web3forms.com and replace this value.
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
-const ACCESS_KEY = "667ba7c5-079b-41e9-9601-86e6a958a925";
+const ACCESS_KEY = "cafa2eeb-a388-4c4f-9c80-c2bc6fdc3e54";
 
 type Values = {
   name: string;
