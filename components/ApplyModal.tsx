@@ -6,7 +6,6 @@ import { t } from "@/lib/i18n";
 
 export type Role = "owner" | "company";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /\d[\d\s().+-]{6,}/; // at least 7 digits' worth of phone
 
 // Web3Forms delivers submissions to the recruiting inbox. The access key is
@@ -19,7 +18,6 @@ const ACCESS_KEY = "667ba7c5-079b-41e9-9601-86e6a958a925";
 type Values = {
   name: string;
   phone: string;
-  email: string;
   experience: string;
   equipment: string; // owner operator
   endorsements: string; // company driver
@@ -28,14 +26,14 @@ type Values = {
 };
 
 const EMPTY: Values = {
-  name: "", phone: "", email: "", experience: "",
+  name: "", phone: "", experience: "",
   equipment: "", endorsements: "", available: "",
   botcheck: "",
 };
 
 type Status = "idle" | "sending" | "success" | "error";
 
-type Errors = { name?: boolean; phone?: boolean; email?: boolean };
+type Errors = { name?: boolean; phone?: boolean };
 
 /**
  * Pop-up driver application. Rendered into a portal at <body> and shown when
@@ -129,7 +127,7 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
     (field: keyof Values) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setValues((v) => ({ ...v, [field]: e.target.value }));
-      if (field === "name" || field === "phone" || field === "email") {
+      if (field === "name" || field === "phone") {
         setErrors((prev) => (prev[field] ? { ...prev, [field]: false } : prev));
       }
     };
@@ -144,13 +142,12 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
     const next: Errors = {
       name: !values.name.trim(),
       phone: !PHONE_RE.test(values.phone.trim()),
-      email: !EMAIL_RE.test(values.email.trim()),
     };
     setErrors(next);
-    if (next.name || next.phone || next.email) {
+    if (next.name || next.phone) {
       // Send focus to the first invalid field so keyboard / screen-reader users
       // are taken straight to the problem.
-      document.getElementById(next.name ? "ap-name" : next.phone ? "ap-phone" : "ap-email")?.focus();
+      document.getElementById(next.name ? "ap-name" : "ap-phone")?.focus();
       return;
     }
 
@@ -161,12 +158,10 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
       access_key: ACCESS_KEY,
       subject: `New ${appType} application — Harb Trucking`,
       from_name: "Harb Trucking website",
-      replyto: values.email.trim(),
       botcheck: values.botcheck,
       "Application type": appType,
       "Full name": values.name.trim(),
       Phone: values.phone.trim(),
-      Email: values.email.trim(),
       "Years of experience": values.experience.trim() || "Not specified",
     };
     if (role === "owner") {
@@ -236,25 +231,14 @@ export default function ApplyModal({ role, onClose }: { role: Role | null; onClo
               {errors.name && <span className="msg" id="ap-name-err" role="alert">{f.nameErr}</span>}
             </div>
 
-            <div className="field two">
-              <div className={`field${errors.phone ? " err" : ""}`}>
-                <label htmlFor="ap-phone">{f.phone}</label>
-                <input
-                  id="ap-phone" name="phone" type="tel" placeholder={f.phonePh} autoComplete="tel" inputMode="tel"
-                  value={values.phone} onChange={update("phone")}
-                  aria-invalid={errors.phone ?? false} aria-describedby={errors.phone ? "ap-phone-err" : undefined}
-                />
-                {errors.phone && <span className="msg" id="ap-phone-err" role="alert">{f.phoneErr}</span>}
-              </div>
-              <div className={`field${errors.email ? " err" : ""}`}>
-                <label htmlFor="ap-email">{f.email}</label>
-                <input
-                  id="ap-email" name="email" type="email" placeholder={f.emailPh} autoComplete="email" inputMode="email"
-                  value={values.email} onChange={update("email")}
-                  aria-invalid={errors.email ?? false} aria-describedby={errors.email ? "ap-email-err" : undefined}
-                />
-                {errors.email && <span className="msg" id="ap-email-err" role="alert">{f.emailErr}</span>}
-              </div>
+            <div className={`field${errors.phone ? " err" : ""}`}>
+              <label htmlFor="ap-phone">{f.phone}</label>
+              <input
+                id="ap-phone" name="phone" type="tel" placeholder={f.phonePh} autoComplete="tel" inputMode="tel"
+                value={values.phone} onChange={update("phone")}
+                aria-invalid={errors.phone ?? false} aria-describedby={errors.phone ? "ap-phone-err" : undefined}
+              />
+              {errors.phone && <span className="msg" id="ap-phone-err" role="alert">{f.phoneErr}</span>}
             </div>
 
             <div className="field">
