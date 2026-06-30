@@ -177,6 +177,8 @@ export const t = {
       location: "Chicago, Illinois, USA",
       emailLabel: "Recruiting e-mail",
       email: "topcdltrucking@gmail.com",
+      phoneLabel: "Phone number",
+      phone: "+12173367946",
       authorityLabel: "Authority",
       authority: "USDOT #4327636 · MC #1689299",
     },
