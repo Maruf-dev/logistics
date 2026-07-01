@@ -63,6 +63,9 @@ export default function SiteHeader() {
             ))}
           </nav>
           <div className="nav-right">
+            <a href="tel:+12173367946" className="nav-phone">
+              +1 217-336-7946
+            </a>
             <Link href="#apply" className="btn btn-accent">
               {t.nav.quote}
             </Link>
@@ -110,6 +113,9 @@ export default function SiteHeader() {
             {link.label}
           </Link>
         ))}
+        <a href="tel:+12173367946" className="dr-phone">
+          +1 217-336-7946
+        </a>
         <Link
           href="#apply"
           className="btn btn-accent"
